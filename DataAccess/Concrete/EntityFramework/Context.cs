@@ -15,5 +15,7 @@ namespace DataAccess.Concrete.EntityFramework
             optionsBuilder.UseSqlServer(@"Server=DESKTOP-DNUIALQ\SQLKOD;initial Catalog=portfolio;integrated Security=true;TrustServerCertificate=True;");
         }
         public DbSet<Users> Users { get; set; }
+
+        public DbSet<Projects> Projects { get; set; }
     }
 }

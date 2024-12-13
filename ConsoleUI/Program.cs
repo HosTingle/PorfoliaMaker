@@ -2,11 +2,26 @@
 using Business.Concrete;
 using DataAccess.Concrete.EntityFramework;
 using DataAccess.Concrete.InMemory;
+using Entities.Concrete;
 
-Console.WriteLine("Hello, World!");
-UsersManager userManager = new UsersManager(new EfUsersDal());
-
-foreach(var users in userManager.GetByUserBetween(0,4)) 
+UsersTest();
+//ProjectTest();
+static void UsersTest()
 {
-    Console.WriteLine(users.FullName); 
+    Console.WriteLine("Hello, World!");
+    UsersManager userManager = new UsersManager(new EfUsersDal());
+
+    foreach (var users in userManager.GetUsersDetails())
+    {
+        Console.WriteLine(users.FullName+ "--" + users.Title);
+    }
+}
+
+static void ProjectTest()
+{
+    ProjectsManager projectsManager = new ProjectsManager(new EfProjectsDal());
+    foreach (var projects in projectsManager.GetAll())
+    {
+        Console.WriteLine(projects.Title);
+    }
 }

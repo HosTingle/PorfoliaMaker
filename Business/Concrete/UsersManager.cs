@@ -1,6 +1,7 @@
 ﻿using Business.Abstract;
 using DataAccess.Abstract;
 using Entities.Concrete;
+using Entities.DTOs;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -36,6 +37,11 @@ namespace Business.Concrete
         public List<Users> GetByUserBetween(decimal min, decimal max) 
         {
             return _usersDal.GetAll(p => p.UserId>min &&  p.UserId < max);
+        }
+
+        public List<UsersDetailDto> GetUsersDetails()
+        {
+            return _usersDal.GetUsersDetails();
         }
     }
 }

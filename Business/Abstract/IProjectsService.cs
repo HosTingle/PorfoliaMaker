@@ -1,4 +1,4 @@
-﻿using Core.DataAccess;
+﻿
 using Entities.Concrete;
 using System;
 using System.Collections.Generic;
@@ -6,10 +6,12 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace DataAccess.Abstract
+namespace Business.Abstract
 {
-    public interface IProductDal:IEntityRepository<Product>
+    public interface IProjectsService
     {
-         
+        List<Projects> GetAll();
+
+        Projects GetById(int categoryId);
     }
 }
