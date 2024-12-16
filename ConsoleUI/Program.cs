@@ -10,11 +10,19 @@ static void UsersTest()
 {
     Console.WriteLine("Hello, World!");
     UsersManager userManager = new UsersManager(new EfUsersDal());
-
-    foreach (var users in userManager.GetUsersDetails())
+    var result = userManager.GetUsersDetails();
+    if(result.Success==true)
     {
-        Console.WriteLine(users.FullName+ "--" + users.Title);
+        foreach (var users in result.Data)
+        {
+            Console.WriteLine(users.FullName + "--" + users.Title);
+        }
     }
+    else
+    {
+        Console.WriteLine(result.Message);
+    }
+
 }
 
 static void ProjectTest()

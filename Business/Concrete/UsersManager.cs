@@ -1,4 +1,6 @@
 ﻿using Business.Abstract;
+using Business.Constants;
+using Core.Utilities.Results;
 using DataAccess.Abstract;
 using Entities.Concrete;
 using Entities.DTOs;
@@ -19,29 +21,46 @@ namespace Business.Concrete
             _usersDal = usersDal;
         }
 
-        public List<Users> GetAll()
+        public IResult Add(Users user)
         {
-            return _usersDal.GetAll();
+
+            if (user.FullName.Length < 2)
+            {
+                return new ErrorResult(Messages.UserNameInvalid);
+            }
+            _usersDal.Add(user);
+            return new SuccessResult(Messages.UserAdded);
         }
 
-        public List<Users> GetAllByCategory(int id)
+        public IDataResult<List<Users>> GetAll()
         {
-            return _usersDal.GetAll(p=>p.UserId == id);
+          
+            return new SuccessDataResult<List<Users>>(_usersDal.GetAll(),Messages.UsersList);
         }
 
-        public List<Users> GetBuUnitePrice(decimal min, decimal max)
+        public IDataResult<List<Users>> GetAllByCategory(int id)
         {
-            throw new NotImplementedException();
+            return new SuccessDataResult<List<Users>>(_usersDal.GetAll(p=>p.UserId == id));
         }
 
-        public List<Users> GetByUserBetween(decimal min, decimal max) 
+
+        public IDataResult<Users> GetById(int id)
         {
-            return _usersDal.GetAll(p => p.UserId>min &&  p.UserId < max);
+            return new SuccessDataResult<Users>(_usersDal.Get(x=>x.UserId == id)); 
         }
 
-        public List<UsersDetailDto> GetUsersDetails()
+        public IDataResult<List<Users>> GetByUserBetween(decimal min, decimal max) 
         {
-            return _usersDal.GetUsersDetails();
+            return new SuccessDataResult<List<Users>>(_usersDal.GetAll(p => p.UserId>min &&  p.UserId < max));
+        }
+
+        public IDataResult<List<UsersDetailDto>> GetUsersDetails()
+        {
+            if (DateTime.Now.Hour == 19)
+            {
+                return new ErrorDataResult<List<UsersDetailDto>>(Messages.MainIntanceTime);
+            }
+            return new SuccessDataResult<List<UsersDetailDto>>(_usersDal.GetUsersDetails());
         }
     }
 }
