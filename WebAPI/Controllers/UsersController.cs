@@ -32,7 +32,7 @@ namespace WebAPI.Controllers
           
         }
         [HttpPost]
-        public IActionResult Post(Users users)
+        public IActionResult Post(User users)
         {
             var result=_usersService.Add(users);
             if (result.Success)

@@ -11,16 +11,16 @@ namespace Business.Abstract
 {
     public interface IUserService
     {
-        IDataResult<List<Users>> GetAll();
+        IDataResult<List<User>> GetAll();
 
-        IDataResult<List<Users>> GetAllByCategory(int id);
+        IDataResult<List<User>> GetAllByCategory(int id);
 
-        IDataResult<List<Users>> GetByUserBetween(decimal min,decimal max);
+        IDataResult<List<User>> GetByUserBetween(decimal min,decimal max);
 
         IDataResult<List<UsersDetailDto> >GetUsersDetails();
 
-        IResult Add(Users user);
+        IResult Add(User user);
 
-        IDataResult<Users> GetById(int id);
+        IDataResult<User> GetById(int id);
     }
 }

@@ -1,60 +1,62 @@
 ﻿using Business.Abstract;
 using Business.Constants;
+using Business.ValidationRules.FluentValidation;
+using Core.Aspect.Autofac.Validation;
+using Core.CrossCuttingConcerns.Validation;
 using Core.Utilities.Results;
 using DataAccess.Abstract;
 using Entities.Concrete;
 using Entities.DTOs;
+using FluentValidation;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using ValidationException = FluentValidation.ValidationException;
 
 namespace Business.Concrete
 {
     public class UserManager : IUserService
     {
-        IUsersDal _usersDal;
+        IUserDal _usersDal;
 
-        public UserManager(IUsersDal usersDal)
+        public UserManager(IUserDal usersDal)
         {
             _usersDal = usersDal;
         }
-
-        public IResult Add(Users user)
+        [ValidationAspect(typeof(UserValidator))]
+        public IResult Add(User user)
         {
 
-            if (user.FullName.Length < 2)
-            {
-                return new ErrorResult(Messages.UserNameInvalid);
-            }
             _usersDal.Add(user);
             return new SuccessResult(Messages.UserAdded);
         }
 
-        public IDataResult<List<Users>> GetAll()
+        public IDataResult<List<User>> GetAll()
         {
             if (DateTime.Now.Hour == 11)
             {
-                return new ErrorDataResult<List<Users>>(Messages.MainIntanceTime);
+                return new ErrorDataResult<List<User>>(Messages.MainIntanceTime);
             }
-            return new SuccessDataResult<List<Users>>(_usersDal.GetAll(),Messages.UsersList);
+            return new SuccessDataResult<List<User>>(_usersDal.GetAll(),Messages.UsersList);
         }
 
-        public IDataResult<List<Users>> GetAllByCategory(int id)
+        public IDataResult<List<User>> GetAllByCategory(int id)
         {
-            return new SuccessDataResult<List<Users>>(_usersDal.GetAll(p=>p.UserId == id));
+            return new SuccessDataResult<List<User>>(_usersDal.GetAll(p=>p.UserId == id));
         }
 
 
-        public IDataResult<Users> GetById(int id)
+        public IDataResult<User> GetById(int id)
         {
-            return new SuccessDataResult<Users>(_usersDal.Get(x=>x.UserId == id)); 
+            return new SuccessDataResult<User>(_usersDal.Get(x=>x.UserId == id)); 
         }
 
-        public IDataResult<List<Users>> GetByUserBetween(decimal min, decimal max) 
+        public IDataResult<List<User>> GetByUserBetween(decimal min, decimal max) 
         {
-            return new SuccessDataResult<List<Users>>(_usersDal.GetAll(p => p.UserId>min &&  p.UserId < max));
+            return new SuccessDataResult<List<User>>(_usersDal.GetAll(p => p.UserId>min &&  p.UserId < max));
         }
 
         public IDataResult<List<UsersDetailDto>> GetUsersDetails()

@@ -9,7 +9,7 @@ UsersTest();
 static void UsersTest()
 {
     Console.WriteLine("Hello, World!");
-    UserManager userManager = new UserManager(new EfUsersDal());
+    UserManager userManager = new UserManager(new EfUserDal());
     var result = userManager.GetUsersDetails();
     if(result.Success==true)
     {

@@ -10,7 +10,7 @@ using System.Threading.Tasks;
 
 namespace Entities.Concrete
 {
-    public class Users:IEntity
+    public class User:IEntity
     {
         [Key]
         public int UserId { get; set; }

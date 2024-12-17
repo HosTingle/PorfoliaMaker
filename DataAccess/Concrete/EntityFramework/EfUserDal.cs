@@ -12,7 +12,7 @@ using Core.DataAccess.EntityFramework;
 using Entities.DTOs;
 namespace DataAccess.Concrete.EntityFramework
 {
-    public class EfUsersDal : EfEntityRepositoryBase<Users, PortfContext>, IUsersDal
+    public class EfUserDal : EfEntityRepositoryBase<User, PortfContext>, IUserDal
     {
         public List<UsersDetailDto> GetUsersDetails()
         {
