@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace Business.Abstract
 {
-    public interface IUsersService
+    public interface IUserService
     {
         IDataResult<List<Users>> GetAll();
 

@@ -9,11 +9,11 @@ using System.Threading.Tasks;
 
 namespace Business.Concrete
 {
-    public class ProjectsManager : IProjectsService
+    public class ProjectManager : IProjectService
     {
         IProjectsDal _projectsDal;
 
-        public ProjectsManager(IProjectsDal projectsDal)
+        public ProjectManager(IProjectsDal projectsDal)
         {
             _projectsDal = projectsDal;
         }

@@ -9,7 +9,7 @@ UsersTest();
 static void UsersTest()
 {
     Console.WriteLine("Hello, World!");
-    UsersManager userManager = new UsersManager(new EfUsersDal());
+    UserManager userManager = new UserManager(new EfUsersDal());
     var result = userManager.GetUsersDetails();
     if(result.Success==true)
     {
@@ -27,7 +27,7 @@ static void UsersTest()
 
 static void ProjectTest()
 {
-    ProjectsManager projectsManager = new ProjectsManager(new EfProjectsDal());
+    ProjectManager projectsManager = new ProjectManager(new EfProjectsDal());
     foreach (var projects in projectsManager.GetAll())
     {
         Console.WriteLine(projects.Title);

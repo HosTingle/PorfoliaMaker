@@ -20,7 +20,7 @@ namespace Business.Concrete
         }
         public List<Product> GetAll()
         {
-            //Yetkisi var mı ? 
+            //Yetkisi var mı ?
            return _productDal.GetAll();
         }
     }
