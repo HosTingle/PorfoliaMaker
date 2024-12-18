@@ -1,13 +1,15 @@
 ﻿using Business.Abstract;
+using Business.BusinessAspects.Autofac;
 using Business.CCS;
 using Business.Constants;
 using Business.ValidationRules.FluentValidation;
 using Core.Aspect.Autofac.Validation;
 using Core.CrossCuttingConcerns.Validation;
+using Core.Entities.Concrete;
 using Core.Utilities.Business;
 using Core.Utilities.Results;
 using DataAccess.Abstract;
-using Entities.Concrete;
+using DataAccess.Concrete.EntityFramework;
 using Entities.DTOs;
 using FluentValidation;
 using System;
@@ -29,6 +31,7 @@ namespace Business.Concrete
         {
             _usersDal = usersDal;
         }
+   
         [ValidationAspect(typeof(UserValidator))]
         public IResult Add(User user)
         {
@@ -44,7 +47,7 @@ namespace Business.Concrete
 
 
 
-
+        [SecuredOperation("product.add,admin")]
         public IDataResult<List<User>> GetAll()
         {
        
@@ -91,6 +94,17 @@ namespace Business.Concrete
                 return new ErrorResult(Messages.UserNameInvalid);
             }
             return new SuccessResult();
+        }
+
+        public List<Role> GetClaims(User user)
+        {
+            return _usersDal.GetClaims(user);
+        }
+
+        public User GetByMail(string email)
+        {
+            var result= _usersDal.Get(u => u.Email == email);
+            return result;
         }
     }
 }

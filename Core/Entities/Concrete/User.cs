@@ -8,25 +8,28 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Entities.Concrete
+namespace Core.Entities.Concrete
 {
-    public class User:IEntity
+    public class User : IEntity
     {
         [Key]
         public int UserId { get; set; }
 
-        public string FullName { get; set; } 
+        public string FullName { get; set; }
 
         public string Email { get; set; }
 
-        public string PasswordSalt { get; set; } 
+        public byte[] PasswordSalt { get; set; }
 
-        public string PasswordHash { get; set; }
+        public byte[] PasswordHash { get; set; }
 
         public string ProfilePhoto { get; set; }
 
         public string Bio { get; set; }
 
-        public DateTime CreatedAt{ get; set; } 
+        public DateTime CreatedAt { get; set; }
+
+        public bool Status { get; set; }
+
     }
 }

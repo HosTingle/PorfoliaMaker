@@ -1,5 +1,4 @@
 ﻿using DataAccess.Abstract;
-using Entities.Concrete;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -10,10 +9,24 @@ using Microsoft.EntityFrameworkCore;
 using System.IO.MemoryMappedFiles;
 using Core.DataAccess.EntityFramework;
 using Entities.DTOs;
+using Core.Entities.Concrete;
 namespace DataAccess.Concrete.EntityFramework
 {
     public class EfUserDal : EfEntityRepositoryBase<User, PortfContext>, IUserDal
     {
+        public List<Role> GetClaims(User user)
+        {
+            using (var context = new PortfContext())
+            {
+                var result = from role in context.Roles
+                             join userrole in context.UserRoles
+                                 on role.RoleId equals userrole.RoleId
+                             where userrole.UserId == user.UserId
+                             select new Role { RoleId = role.RoleId, RoleName= role.RoleName };
+                return result.ToList();
+
+            }
+        }
         public List<UsersDetailDto> GetUsersDetails()
         {
             using (PortfContext context = new PortfContext())
@@ -31,7 +44,9 @@ namespace DataAccess.Concrete.EntityFramework
                                  PasswordHash = u.PasswordHash,
                                  PasswordSalt = u.PasswordSalt,
                                  ProfilePhoto = u.ProfilePhoto,
-                                 Title = p.Title
+                                 Title = p.Title,
+                                 Status=u.Status,
+                                 
                              };
                 return result.ToList();
 

@@ -18,9 +18,9 @@ namespace Entities.DTOs
 
         public string Email { get; set; }
 
-        public string PasswordSalt { get; set; }
+        public byte[] PasswordSalt { get; set; }
 
-        public string PasswordHash { get; set; }
+        public byte[] PasswordHash { get; set; }
 
         public string ProfilePhoto { get; set; }
 
@@ -29,5 +29,6 @@ namespace Entities.DTOs
         public DateTime CreatedAt { get; set; }
 
         public string Title { get; set; }
+        public bool Status {  get; set; }
     }
 }
