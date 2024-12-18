@@ -13,5 +13,6 @@ namespace Business.Constants
         public static string UserNameInvalid = "User ismi geçersiz";
         public static string MainIntanceTime="Sistem Bakımda";
         public static string UsersList="Userlar Listelendi";
+        public static string MessageFAS = "Kişi eklenme sayısı dolu"; 
     }
 }

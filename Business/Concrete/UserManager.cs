@@ -1,8 +1,10 @@
 ﻿using Business.Abstract;
+using Business.CCS;
 using Business.Constants;
 using Business.ValidationRules.FluentValidation;
 using Core.Aspect.Autofac.Validation;
 using Core.CrossCuttingConcerns.Validation;
+using Core.Utilities.Business;
 using Core.Utilities.Results;
 using DataAccess.Abstract;
 using Entities.Concrete;
@@ -20,8 +22,9 @@ namespace Business.Concrete
 {
     public class UserManager : IUserService
     {
+ 
         IUserDal _usersDal;
-
+   
         public UserManager(IUserDal usersDal)
         {
             _usersDal = usersDal;
@@ -29,17 +32,22 @@ namespace Business.Concrete
         [ValidationAspect(typeof(UserValidator))]
         public IResult Add(User user)
         {
+            IResult result=BusinessRules.Run(EmailKontrol(user), KisiSinirla());
 
+            if (result != null)
+            {
+                return result;
+            }
             _usersDal.Add(user);
             return new SuccessResult(Messages.UserAdded);
         }
 
+
+
+
         public IDataResult<List<User>> GetAll()
         {
-            if (DateTime.Now.Hour == 11)
-            {
-                return new ErrorDataResult<List<User>>(Messages.MainIntanceTime);
-            }
+       
             return new SuccessDataResult<List<User>>(_usersDal.GetAll(),Messages.UsersList);
         }
 
@@ -66,6 +74,23 @@ namespace Business.Concrete
             //    return new ErrorDataResult<List<UsersDetailDto>>(Messages.MainIntanceTime);
             //}
             return new SuccessDataResult<List<UsersDetailDto>>(_usersDal.GetUsersDetails());
+        }
+        private IResult KisiSinirla()
+        {
+            var result = GetAll();
+            if (result.Data.Count > 15)
+            {
+                return new ErrorResult(Messages.MessageFAS);
+            }
+            return new SuccessResult();
+        }
+        private IResult EmailKontrol(User user)
+        {
+            if (_usersDal.GetAll(u => u.Email == user.Email).Any())
+            {
+                return new ErrorResult(Messages.UserNameInvalid);
+            }
+            return new SuccessResult();
         }
     }
 }
