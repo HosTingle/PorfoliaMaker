@@ -3,6 +3,7 @@ using Business.BusinessAspects.Autofac;
 using Business.CCS;
 using Business.Constants;
 using Business.ValidationRules.FluentValidation;
+using Core.Aspect.Autofac.Caching;
 using Core.Aspect.Autofac.Validation;
 using Core.CrossCuttingConcerns.Validation;
 using Core.Entities.Concrete;
@@ -31,7 +32,8 @@ namespace Business.Concrete
         {
             _usersDal = usersDal;
         }
-   
+
+
         [ValidationAspect(typeof(UserValidator))]
         public IResult Add(User user)
         {
@@ -46,20 +48,19 @@ namespace Business.Concrete
         }
 
 
-
-        [SecuredOperation("product.add,admin")]
+        [CacheAspect]
         public IDataResult<List<User>> GetAll()
         {
        
             return new SuccessDataResult<List<User>>(_usersDal.GetAll(),Messages.UsersList);
         }
-
+        [SecuredOperation("product.add,admin")]
         public IDataResult<List<User>> GetAllByCategory(int id)
         {
             return new SuccessDataResult<List<User>>(_usersDal.GetAll(p=>p.UserId == id));
         }
 
-
+        [CacheRemoveAspect("User_*")]
         public IDataResult<User> GetById(int id)
         {
             return new SuccessDataResult<User>(_usersDal.Get(x=>x.UserId == id)); 
@@ -105,6 +106,11 @@ namespace Business.Concrete
         {
             var result= _usersDal.Get(u => u.Email == email);
             return result;
+        }
+
+        public IResult AddTransactionTest(User user)
+        {
+            throw new NotImplementedException();
         }
     }
 }

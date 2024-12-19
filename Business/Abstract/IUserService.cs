@@ -24,5 +24,7 @@ namespace Business.Abstract
         IDataResult<User> GetById(int id);
         List<Role> GetClaims(User user);
         User GetByMail(string email);
+
+        IResult AddTransactionTest(User user);  
     }
 }
