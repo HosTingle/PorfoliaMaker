@@ -22,5 +22,6 @@ namespace Business.Constants
         internal static string SuccessfulLogin;
         internal static string UserAlreadyExists;
         internal static string AccessTokenCreated;
+        internal static string BlogAdd="Blog eklendi";
     }
 }

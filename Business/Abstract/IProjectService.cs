@@ -1,4 +1,5 @@
 ﻿
+using Core.Utilities.Results;
 using Entities.Concrete;
 using System;
 using System.Collections.Generic;
@@ -10,8 +11,14 @@ namespace Business.Abstract
 {
     public interface IProjectService
     {
-        List<Project> GetAll();
+        IDataResult<List<Project>> GetAll();
 
-        Project GetById(int categoryId);
+        IDataResult<Project> GetById(int id); 
+
+        IResult Add(Project project);
+
+        IResult Update(Project project);
+
+        IResult Delete(Project project); 
     }
 }

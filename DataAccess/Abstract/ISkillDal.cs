@@ -8,7 +8,8 @@ using System.Threading.Tasks;
 
 namespace DataAccess.Abstract
 {
-    public interface IProjectsDal:IEntityRepository<Project>
+    public interface ISkillDal:IEntityRepository<Skill>
     {
+        
     }
 }

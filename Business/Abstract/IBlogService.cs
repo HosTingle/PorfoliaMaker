@@ -18,7 +18,7 @@ namespace Business.Abstract
         
         IResult Update(Blog blog);
 
-        IResult Delete(int id);
+        IResult Delete(Blog blog);
 
         IDataResult<Blog> GetById(int id);
     }
