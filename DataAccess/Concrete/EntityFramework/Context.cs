@@ -17,7 +17,7 @@ namespace DataAccess.Concrete.EntityFramework
         }
         public DbSet<User> Users { get; set; }
 
-        public DbSet<Projects> Projects { get; set; }
+        public DbSet<Project> Projects { get; set; }
 
         public DbSet<UserRole> UserRoles { get; set; }
 

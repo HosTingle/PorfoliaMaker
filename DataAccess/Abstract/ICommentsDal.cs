@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 using Core.DataAccess;
 namespace DataAccess.Abstract
 {
-    public interface ICommentsDal:IEntityRepository<Comments>
+    public interface ICommentsDal:IEntityRepository<Comment>
     {
     }
 }

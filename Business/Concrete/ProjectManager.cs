@@ -18,13 +18,13 @@ namespace Business.Concrete
             _projectsDal = projectsDal;
         }
 
-        public List<Projects> GetAll()
+        public List<Project> GetAll()
         {
             //İş Kodları
             return _projectsDal.GetAll();
         }
 
-        public Projects GetById(int projectId)
+        public Project GetById(int projectId)
         {
             return _projectsDal.Get(c=>c.ProjectId==projectId);
         }

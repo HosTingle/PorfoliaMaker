@@ -10,8 +10,8 @@ namespace Business.Abstract
 {
     public interface IProjectService
     {
-        List<Projects> GetAll();
+        List<Project> GetAll();
 
-        Projects GetById(int categoryId);
+        Project GetById(int categoryId);
     }
 }

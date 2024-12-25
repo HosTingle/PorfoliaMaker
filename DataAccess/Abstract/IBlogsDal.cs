@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 using Core.DataAccess;
 namespace DataAccess.Abstract
 {
-    public interface IBlogsDal:IEntityRepository<Blogs>
+    public interface IBlogsDal:IEntityRepository<Blog>
     {
     }
 }

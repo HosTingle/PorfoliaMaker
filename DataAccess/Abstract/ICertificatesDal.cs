@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 using Core.DataAccess;
 namespace DataAccess.Abstract
 {
-    public interface ICertificatesDal:IEntityRepository<Certificates>
+    public interface ICertificatesDal:IEntityRepository<Certificate>
     {
     }
 }
