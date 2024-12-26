@@ -24,10 +24,36 @@ namespace Business.DependencyResolvers.Autofac
             builder.RegisterType<UserManager>().As<IUserService>().SingleInstance();
             builder.RegisterType<EfUserDal>().As<IUserDal>().SingleInstance();
 
+            builder.RegisterType<BlogManager>().As<IBlogService>().SingleInstance();
+            builder.RegisterType<EfBlogDal>().As<IBlogDal>().SingleInstance();
 
+            builder.RegisterType<CertificateManager>().As<ICertificateService>().SingleInstance();
+            builder.RegisterType<EfCertificateDal>().As<ICertificateDal>().SingleInstance();
+
+            builder.RegisterType<CommentManager>().As<ICommentService>().SingleInstance();
+            builder.RegisterType<EfCommentDal>().As<ICommentDal>().SingleInstance(); 
+
+            builder.RegisterType<EventManager>().As<IEventService>().SingleInstance();
+            builder.RegisterType<EfEventDal>().As<IEventDal>().SingleInstance();
+
+            builder.RegisterType<ProjectManager>().As<IProjectService>().SingleInstance();
+            builder.RegisterType<EfProjectDal>().As<IProjectDal>().SingleInstance();
+
+
+            builder.RegisterType<SkillManager>().As<ISkillService>().SingleInstance();
+            builder.RegisterType<EfSkillDal>().As<ISkillDal>().SingleInstance();
+
+
+            builder.RegisterType<SocialLinkManager>().As<ISocialLinkService>().SingleInstance();
+            builder.RegisterType<EfSocialLinkDal>().As<ISocialLinkDal>().SingleInstance();
+
+
+            builder.RegisterType<SubscriptionManager>().As<ISubscriptionService>().SingleInstance();
+            builder.RegisterType<EfSubscriptionDal>().As<ISubscriptionDal>().SingleInstance();
 
             builder.RegisterType<AuthManager>().As<IAuthService>();
             builder.RegisterType<JwtHelper>().As<ITokenHelper>();
+
 
             var assembly = System.Reflection.Assembly.GetExecutingAssembly();
 

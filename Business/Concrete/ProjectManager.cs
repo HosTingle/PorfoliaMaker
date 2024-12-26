@@ -31,15 +31,15 @@ namespace Business.Concrete
             return new SuccessResult();
         }
 
-        public List<Project> GetAll()
+        public IDataResult<List<Project>> GetAll()
         { 
             //İş Kodları
-            return _projectsDal.GetAll();
+            return new SuccessDataResult<List<Project>>( _projectsDal.GetAll());
         }
 
-        public Project GetById(int id) 
+        public IDataResult<Project> GetById(int id) 
         {
-            return _projectsDal.Get(c=>c.ProjectId==id);
+            return new SuccessDataResult<Project>(_projectsDal.Get(c=>c.ProjectId==id));
         }
 
         public IResult Update(Project project)

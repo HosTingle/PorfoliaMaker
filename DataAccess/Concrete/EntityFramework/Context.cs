@@ -22,5 +22,20 @@ namespace DataAccess.Concrete.EntityFramework
         public DbSet<UserRole> UserRoles { get; set; }
 
         public DbSet<Role> Roles { get; set; }
+
+        public DbSet<Blog> Blogs { get; set; }
+
+        public DbSet<Certificate> Certificates { get; set; }
+
+        public DbSet<Comment> Comments { get; set; } 
+
+        public DbSet<Event> Events { get; set; } 
+        public DbSet<Skill> Skills { get; set; } 
+        public DbSet<SocialLink> SocialLinks { get; set; }
+
+        public DbSet<Subscription> Subscriptions { get; set; } 
+
+
+
     }
 }

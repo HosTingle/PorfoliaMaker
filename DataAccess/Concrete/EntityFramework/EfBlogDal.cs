@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace DataAccess.Concrete.EntityFramework
 {
-    public class EfProjectsDal:EfEntityRepositoryBase<Project,PortfContext>,IProjectDal
+    public class EfBlogDal : EfEntityRepositoryBase<Blog, PortfContext>, IBlogDal
     {
     }
 }
