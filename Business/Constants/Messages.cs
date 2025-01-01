@@ -19,7 +19,7 @@ namespace Business.Constants
         internal static string UserRegistered;
         internal static User UserNotFound;
         internal static User PasswordError;
-        internal static string SuccessfulLogin;
+        internal static string SuccessfulLogin="Giris basarili,token eklendi";
         internal static string UserAlreadyExists;
         internal static string AccessTokenCreated;
         internal static string BlogAdd="Blog eklendi";
