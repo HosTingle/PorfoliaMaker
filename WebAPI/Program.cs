@@ -27,6 +27,7 @@ builder.Services.AddHttpContextAccessor();
 builder.Services.AddDependencyResolvers(new ICoreModule[]{
     new CoreModule(),
 });
+builder.Services.AddCors();
 //builder.Services.AddSingleton<IUserDal, EfUserDal>();
 //builder.Services.AddSingleton<IProductDal, EfProductDal>();
 //builder.Services.AddSingleton<IProjectsDal, EfProjectsDal>();
@@ -65,6 +66,10 @@ if (app.Environment.IsDevelopment())
     app.UseSwaggerUI();
 
 }
+
+app.ConfigureCustomExceptionMiddleware();
+
+app.UseCors(builder => builder.WithOrigins("http://localhost:4200").AllowAnyOrigin().AllowAnyMethod().AllowAnyHeader());
 
 app.UseHttpsRedirection();
 

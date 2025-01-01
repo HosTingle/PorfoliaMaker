@@ -53,6 +53,18 @@ namespace WebAPI.Controllers
 
             return BadRequest(result);
         }
+        [HttpGet("getbyproject")] 
+        public IActionResult GetByProject(int getbyproject) 
+        {
+            var result=_usersService.GetByProject(getbyproject);
+            if (result.Success)
+            {
+                return Ok(result);
+
+            }
+            return BadRequest(result);
+        
+        }
 
     }
 }

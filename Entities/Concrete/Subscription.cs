@@ -15,7 +15,7 @@ namespace Entities.Concrete
 
         public string Email { get; set; }   
 
-        public DateTime SubscribeAt { get; set; }   
+        public DateTime SubscribedAt { get; set; }   
 
         public int UserId {  get; set; }
     }

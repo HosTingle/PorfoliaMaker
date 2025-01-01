@@ -112,5 +112,11 @@ namespace Business.Concrete
         {
             throw new NotImplementedException();
         }
+
+        public IDataResult<List<User>> GetByProject(int getbyproject)
+        {
+            return new SuccessDataResult<List<User>>(_usersDal.GetAll(x=>x.UserId == getbyproject));
+       
+        }
     }
 }

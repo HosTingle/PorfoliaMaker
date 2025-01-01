@@ -16,7 +16,7 @@ namespace Entities.Concrete
         public int UserId { get; set; } 
         public string Title { get; set; } 
 
-        public string Insitution { get; set; } 
+        public string Institution { get; set; }   
 
         public DateTime DateReceived { get; set; } 
 
