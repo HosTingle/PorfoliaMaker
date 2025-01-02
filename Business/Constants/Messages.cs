@@ -17,9 +17,9 @@ namespace Business.Constants
         public static string MessageFAS = "Kişi eklenme sayısı dolu";
         public static string? AuthorizationDenied="Yetkiniz yok";
         internal static string UserRegistered;
-        internal static User UserNotFound;
-        internal static User PasswordError;
-        internal static string SuccessfulLogin="Giris basarili,token eklendi";
+        public static string UserNotFound="Bilgiler Yanlış Girildi,Tekrar Deneyiniz";
+        public static string PasswordError="Bilgiler Yanlış Girildi,Tekrar Deneyiniz";
+        public static string SuccessfulLogin="Giriş Başarılı";
         internal static string UserAlreadyExists;
         internal static string AccessTokenCreated;
         internal static string BlogAdd="Blog eklendi";
