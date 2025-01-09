@@ -17,6 +17,6 @@ namespace Entities.Concrete
 
         public string Name { get; set; }
 
-        public string Proficiency { get; set; } 
+        public int Proficiency { get; set; } 
     }
 }

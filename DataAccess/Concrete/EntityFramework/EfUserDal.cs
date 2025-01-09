@@ -54,5 +54,37 @@ namespace DataAccess.Concrete.EntityFramework
             }
 
         }
+        public UserAllInfoDto GetUsersAllInfo(int userId)
+        {
+            using (PortfContext context = new PortfContext())
+            {
+                var user = context.Users.Where(u => u.UserId == userId)
+                                         .Select(u => new UserAllInfoDto
+                                         {
+                                             Name = u.FullName,
+                                             Skills = context.Skills.Where(s => s.UserId == u.UserId).ToList(),
+                                             Certificates = context.Certificates.Where(c => c.UserId == u.UserId).ToList(),
+                                             Projects = context.Projects.Where(p => p.UserId == u.UserId).ToList(),
+                                             Blogs = context.Blogs.Where(b => b.UserId == u.UserId).ToList(),
+                                             Comments = context.Comments.Where(co => co.UserId == u.UserId).ToList(),
+                                             socialLinks = context.SocialLinks.Where(sl => sl.UserId == u.UserId).ToList()
+                                         })
+                                         .AsEnumerable()
+                                         .FirstOrDefault();
+
+                if (user != null)
+                {
+                    return user;
+                }
+                else
+                {
+              
+                    throw new Exception($"User with ID {userId} not found.");
+           
+                }
+            }
+        }
+
+
     }
 }

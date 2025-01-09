@@ -31,6 +31,19 @@ namespace WebAPI.Controllers
 
           
         }
+        [HttpGet("getAllInfo")]
+        public IActionResult GetAllInfo(int id) 
+        {
+
+            var result = _usersService.GetUserAllInfo(id);
+            if (result.Success)
+            {
+                return Ok(result);
+            }
+            return BadRequest(result);
+
+
+        }
         [HttpPost]
         public IActionResult Post(User users)
         {

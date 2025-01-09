@@ -118,5 +118,10 @@ namespace Business.Concrete
             return new SuccessDataResult<List<User>>(_usersDal.GetAll(x=>x.UserId == getbyproject));
        
         }
+
+        public IDataResult<UserAllInfoDto>? GetUserAllInfo(int id) 
+        {
+            return new SuccessDataResult<UserAllInfoDto>(_usersDal.GetUsersAllInfo(id));
+        }
     }
 }

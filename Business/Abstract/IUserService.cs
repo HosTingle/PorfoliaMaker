@@ -27,5 +27,7 @@ namespace Business.Abstract
 
         IResult AddTransactionTest(User user);
         IDataResult<List<User>>? GetByProject(int getbyproject);
-    }
+
+        IDataResult<UserAllInfoDto>? GetUserAllInfo(int id);
+    } 
 }
