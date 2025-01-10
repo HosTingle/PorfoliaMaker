@@ -10,6 +10,12 @@ namespace Entities.DTOs
     public class UserAllInfoDto 
     {
         public string Name { get; set; }
+        
+        public string LinkedIn {  get; set; } 
+
+        public string Github {  get; set; }
+
+        public string Website {  get; set; }
 
         public List<Skill> Skills { get; set; }
 

@@ -67,7 +67,12 @@ namespace DataAccess.Concrete.EntityFramework
                                              Projects = context.Projects.Where(p => p.UserId == u.UserId).ToList(),
                                              Blogs = context.Blogs.Where(b => b.UserId == u.UserId).ToList(),
                                              Comments = context.Comments.Where(co => co.UserId == u.UserId).ToList(),
-                                             socialLinks = context.SocialLinks.Where(sl => sl.UserId == u.UserId).ToList()
+                              
+                                             Github = context.SocialLinks.Where(sl => sl.UserId == u.UserId && sl.Platform.ToLower() == "github").Select(sl => sl.Url).FirstOrDefault() ?? "No GitHub",
+                                             LinkedIn = context.SocialLinks.Where(sl => sl.UserId == u.UserId && sl.Platform.ToLower() == "linkedin").Select(sl => sl.Url).FirstOrDefault() ?? "No LinkedIn",
+                                             Website = context.SocialLinks.Where(sl => sl.UserId == u.UserId && sl.Platform.ToLower() == "website").Select(sl => sl.Url).FirstOrDefault() ?? "No Website",
+
+
                                          })
                                          .AsEnumerable()
                                          .FirstOrDefault();
