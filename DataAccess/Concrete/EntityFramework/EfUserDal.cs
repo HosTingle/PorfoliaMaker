@@ -39,6 +39,7 @@ namespace DataAccess.Concrete.EntityFramework
                                  UserId = p.UserId,
                                  Bio = u.Bio,
                                  CreatedAt = u.CreatedAt,
+                                 NickName=u.NickName,
                                  Email = u.Email,
                                  FullName = u.FullName,
                                  PasswordHash = u.PasswordHash,
@@ -62,6 +63,8 @@ namespace DataAccess.Concrete.EntityFramework
                                          .Select(u => new UserAllInfoDto
                                          {
                                              Name = u.FullName,
+                                             NickName=u.NickName,
+                                             ProfilePhoto=u.ProfilePhoto,
                                              Skills = context.Skills.Where(s => s.UserId == u.UserId).ToList(),
                                              Certificates = context.Certificates.Where(c => c.UserId == u.UserId).ToList(),
                                              Projects = context.Projects.Where(p => p.UserId == u.UserId).ToList(),
@@ -83,8 +86,8 @@ namespace DataAccess.Concrete.EntityFramework
                 }
                 else
                 {
-              
-                    throw new Exception($"User with ID {userId} not found.");
+
+                    return null;
            
                 }
             }

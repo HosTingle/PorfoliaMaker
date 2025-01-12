@@ -33,11 +33,12 @@ namespace Business.Concrete
             {
                 Email = userForRegisterDto.Email,
                 FullName = userForRegisterDto.FullName,
+                NickName=userForRegisterDto.NickName,
                 PasswordHash = passwordHash,
                 PasswordSalt = passwordSalt,
                 Bio="sdsasdfsdf",
                 CreatedAt = DateTime.UtcNow,
-                ProfilePhoto="dsasdfsdf",
+                ProfilePhoto= "https://i.pinimg.com/736x/09/21/fc/0921fc87aa989330b8d403014bf4f340.jpg",
                 Status = true
             };
             _userService.Add(user);

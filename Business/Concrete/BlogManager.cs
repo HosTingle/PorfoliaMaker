@@ -39,6 +39,11 @@ namespace Business.Concrete
             return new SuccessDataResult<List<Blog>>(_blogDal.GetAll());
         }
 
+        public IDataResult<List<Blog>> GetAllByUserId(int id) 
+        {
+            return new SuccessDataResult<List<Blog>>(_blogDal.GetAll(b=>b.UserId==id));
+        }
+
         public IDataResult<Blog> GetById(int id)
         {
             return new SuccessDataResult<Blog>(_blogDal.Get(b=>b.BlogId==id)); 

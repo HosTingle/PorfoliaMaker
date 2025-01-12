@@ -29,7 +29,19 @@ namespace WebAPI.Controllers
 
 
         }
+        [HttpGet("getAllByUserId")] 
+        public IActionResult GetAllByUserId(int id) 
+        {
 
+            var result = _blogService.GetAllByUserId(id); 
+            if (result.Success)
+            {
+                return Ok(result);
+            }
+            return BadRequest(result);
+
+
+        }
         [HttpPost("add")]
         public IActionResult Add(Blog blog) 
         {
@@ -82,5 +94,7 @@ namespace WebAPI.Controllers
 
 
         }
+
+
     }
 }

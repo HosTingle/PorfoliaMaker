@@ -14,6 +14,7 @@ namespace Business.Abstract
     {
         IDataResult<List<Blog>> GetAll();
 
+        IDataResult<List<Blog>> GetAllByUserId(int id); 
         IResult Add(Blog blog); 
         
         IResult Update(Blog blog);
@@ -21,5 +22,7 @@ namespace Business.Abstract
         IResult Delete(Blog blog);
 
         IDataResult<Blog> GetById(int id);
+
+
     }
 }

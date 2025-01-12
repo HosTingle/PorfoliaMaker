@@ -20,6 +20,8 @@ namespace Entities.Concrete
 
         public string Conte { get; set; }
 
+        public string BlogPhoto {  get; set; }
+
         public DateTime PublishedAt { get; set; } 
     }
 }

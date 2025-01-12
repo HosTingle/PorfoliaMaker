@@ -1,4 +1,5 @@
-﻿using Entities.Concrete;
+﻿using Core;
+using Entities.Concrete;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -7,15 +8,19 @@ using System.Threading.Tasks;
 
 namespace Entities.DTOs
 {
-    public class UserAllInfoDto 
+    public class UserAllInfoDto:IDto 
     {
         public string Name { get; set; }
+
+        public string NickName { get; set; } 
         
         public string LinkedIn {  get; set; } 
 
         public string Github {  get; set; }
 
         public string Website {  get; set; }
+
+        public string ProfilePhoto {  get; set; }
 
         public List<Skill> Skills { get; set; }
 
