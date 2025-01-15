@@ -93,6 +93,28 @@ namespace DataAccess.Concrete.EntityFramework
             }
         }
 
+        public UserById GetUserById(int id)
+        {
+            using (PortfContext context = new PortfContext())
+            {
+                var result = from u in context.Users
+                             select new UserById
+                             {
+                                 UserId = u.UserId,
+                                 Bio = u.Bio,
+                                 CreatedAt = u.CreatedAt,
+                                 NickName = u.NickName,
+                                 Email = u.Email,
+                                 FullName = u.FullName,
 
+                                 ProfilePhoto = u.ProfilePhoto,
+                                 Status = u.Status,
+
+                             };
+                return result.AsEnumerable().FirstOrDefault(); ;
+
+
+            }
+        }
     }
 }

@@ -60,12 +60,12 @@ namespace Business.Concrete
             return new SuccessDataResult<List<User>>(_usersDal.GetAll(p=>p.UserId == id));
         }
 
-        [CacheRemoveAspect("User_*")]
-        public IDataResult<User> GetById(int id)
+        public IDataResult<UserById> GetById(int id)
         {
-            return new SuccessDataResult<User>(_usersDal.Get(x=>x.UserId == id)); 
+            return new SuccessDataResult<UserById>(_usersDal.GetUserById(id)); 
         }
 
+        [CacheRemoveAspect("User_*")]
         public IDataResult<List<User>> GetByUserBetween(decimal min, decimal max) 
         {
             return new SuccessDataResult<List<User>>(_usersDal.GetAll(p => p.UserId>min &&  p.UserId < max));
@@ -118,7 +118,8 @@ namespace Business.Concrete
             return new SuccessDataResult<List<User>>(_usersDal.GetAll(x=>x.UserId == getbyproject));
        
         }
-
+        [SecuredOperation("user")]
+        
         public IDataResult<UserAllInfoDto>? GetUserAllInfo(int id) 
         {
             return new SuccessDataResult<UserAllInfoDto>(_usersDal.GetUsersAllInfo(id));

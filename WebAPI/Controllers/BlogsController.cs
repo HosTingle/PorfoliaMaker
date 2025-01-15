@@ -27,7 +27,6 @@ namespace WebAPI.Controllers
             }
             return BadRequest(result);
 
-
         }
         [HttpGet("getAllByUserId")] 
         public IActionResult GetAllByUserId(int id) 

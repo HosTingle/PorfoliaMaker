@@ -17,11 +17,11 @@ namespace Business.Abstract
 
         IDataResult<List<User>> GetByUserBetween(decimal min,decimal max);
 
-        IDataResult<List<UsersDetailDto> >GetUsersDetails();
+        IDataResult<List<UsersDetailDto>> GetUsersDetails();
 
         IResult Add(User user);
 
-        IDataResult<User> GetById(int id);
+        IDataResult<UserById> GetById(int id);
         List<Role> GetClaims(User user);
         User GetByMail(string email);
 

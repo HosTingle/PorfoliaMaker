@@ -16,5 +16,7 @@ namespace DataAccess.Abstract
         List<Role> GetClaims(User user);
 
         UserAllInfoDto GetUsersAllInfo(int id);
+
+        UserById GetUserById(int id);
     }
 }
