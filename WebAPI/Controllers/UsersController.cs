@@ -9,7 +9,7 @@ namespace WebAPI.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class UsersController : ControllerBase
+    public class UsersController : BaseController
     {
         IUserService _usersService;
 
@@ -32,10 +32,10 @@ namespace WebAPI.Controllers
           
         }
         [HttpGet("getAllInfo")]
-        public IActionResult GetAllInfo(int id) 
+        public IActionResult GetAllInfo() 
         {
-
-            var result = _usersService.GetUserAllInfo(id);
+            int userId = GetUserIdFromToken();
+            var result = _usersService.GetUserAllInfo(userId);
             if (result.Success)
             {
                 return Ok(result);
@@ -56,9 +56,10 @@ namespace WebAPI.Controllers
         }
 
         [HttpGet("getById")]
-        public IActionResult Get(int id)
+        public IActionResult GetById() 
         {
-            var result =_usersService.GetById(id);
+            int userId = GetUserIdFromToken();
+            var result =_usersService.GetById(userId);
             if (result.Success)
             {
                 return Ok(result);

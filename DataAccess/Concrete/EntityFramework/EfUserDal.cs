@@ -98,6 +98,7 @@ namespace DataAccess.Concrete.EntityFramework
             using (PortfContext context = new PortfContext())
             {
                 var result = from u in context.Users
+                             where u.UserId == id
                              select new UserById
                              {
                                  UserId = u.UserId,
@@ -106,14 +107,10 @@ namespace DataAccess.Concrete.EntityFramework
                                  NickName = u.NickName,
                                  Email = u.Email,
                                  FullName = u.FullName,
-
                                  ProfilePhoto = u.ProfilePhoto,
                                  Status = u.Status,
-
                              };
-                return result.AsEnumerable().FirstOrDefault(); ;
-
-
+                return result.FirstOrDefault();
             }
         }
     }

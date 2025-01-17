@@ -59,7 +59,7 @@ namespace Business.Concrete
         {
             return new SuccessDataResult<List<User>>(_usersDal.GetAll(p=>p.UserId == id));
         }
-
+        [SecuredOperation("user")]
         public IDataResult<UserById> GetById(int id)
         {
             return new SuccessDataResult<UserById>(_usersDal.GetUserById(id)); 
@@ -101,7 +101,7 @@ namespace Business.Concrete
         {
             return _usersDal.GetClaims(user);
         }
-
+  
         public User GetByMail(string email)
         {
             var result= _usersDal.Get(u => u.Email == email);
@@ -119,7 +119,6 @@ namespace Business.Concrete
        
         }
         [SecuredOperation("user")]
-        
         public IDataResult<UserAllInfoDto>? GetUserAllInfo(int id) 
         {
             return new SuccessDataResult<UserAllInfoDto>(_usersDal.GetUsersAllInfo(id));
