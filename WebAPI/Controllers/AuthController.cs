@@ -46,11 +46,15 @@ namespace WebAPI.Controllers
             var registerResult = _authService.Register(userForRegisterDto, userForRegisterDto.Password);
             var result = _authService.CreateAccessToken(registerResult);
             if (result.Success)
-            {
-                return Ok(result.Data);
+            { 
+                var addrole = _authService.AddUserRole(registerResult);
+                if (addrole.Success)
+                {
+                    return Ok(result);
+                }
             }
 
-            return BadRequest(result.Message);
+            return BadRequest(result);
         }
     }
 }

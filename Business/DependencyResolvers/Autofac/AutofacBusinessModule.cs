@@ -51,6 +51,9 @@ namespace Business.DependencyResolvers.Autofac
             builder.RegisterType<SubscriptionManager>().As<ISubscriptionService>().SingleInstance();
             builder.RegisterType<EfSubscriptionDal>().As<ISubscriptionDal>().SingleInstance();
 
+            builder.RegisterType<UserRoleManager>().As<IUserRoleService>().SingleInstance();
+            builder.RegisterType<EfUserRoleDal>().As<IUserRoleDal>().SingleInstance();
+
             builder.RegisterType<AuthManager>().As<IAuthService>();
             builder.RegisterType<JwtHelper>().As<ITokenHelper>();
 

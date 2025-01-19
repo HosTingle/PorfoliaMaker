@@ -18,11 +18,13 @@ namespace Business.Concrete
     {
         private IUserService _userService;
         private ITokenHelper _tokenHelper;
+        private IUserRoleService _userRoleService;  
 
-        public AuthManager(IUserService userService, ITokenHelper tokenHelper)
+        public AuthManager(IUserService userService, ITokenHelper tokenHelper, IUserRoleService userRoleService)
         {
             _userService = userService;
             _tokenHelper = tokenHelper;
+            _userRoleService = userRoleService;
         }
 
         public IDataResult<User> Register(UserForRegisterDto userForRegisterDto, string password)
@@ -44,7 +46,8 @@ namespace Business.Concrete
             _userService.Add(user);
             return new SuccessDataResult<User>(user, Messages.UserRegistered);
         }
-     
+
+
         public IDataResult<User> Login(UserForLoginDto userForLoginDto)
         {
             var userToCheck = _userService.GetByMail(userForLoginDto.Email);
@@ -75,6 +78,20 @@ namespace Business.Concrete
             var claims = _userService.GetClaims(user.Data);
             var accessToken = _tokenHelper.CreateToken(user.Data, claims);
             return new SuccessDataResult<AccessToken>(accessToken, user.Message);
+        }
+        public IResult AddUserRole(IDataResult<User> user) 
+        {
+            var userRole = new UserRole {
+                UserId=user.Data.UserId,
+                RoleId=3
+            };
+            var result=_userRoleService.Add(userRole);
+            if (!result.Success)
+            {
+                new ErrorResult(Messages.UserRoleErrorMesage);
+
+            }
+            return new SuccessResult();
         }
     }
 }
