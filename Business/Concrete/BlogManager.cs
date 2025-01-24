@@ -38,7 +38,7 @@ namespace Business.Concrete
         {
             return new SuccessDataResult<List<Blog>>(_blogDal.GetAll());
         }
-
+        [SecuredOperation("user")]
         public IDataResult<List<Blog>> GetAllByUserId(int id) 
         {
             return new SuccessDataResult<List<Blog>>(_blogDal.GetAll(b=>b.UserId==id));

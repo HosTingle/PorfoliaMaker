@@ -15,7 +15,7 @@ namespace Business.Constants
         public static string MainIntanceTime="Sistem Bakımda";
         public static string UsersList="Userlar Listelendi";
         public static string MessageFAS = "Kişi eklenme sayısı dolu";
-        public static string? AuthorizationDenied="Yetkiniz yok";
+        public static string AuthorizationDenied="Yetkiniz yok";
         public static string UserRegistered="Kayıt başarılı, Giriş Yapın";
         public static string UserNotFound="Bilgiler Yanlış Girildi,Tekrar Deneyiniz";
         public static string PasswordError="Bilgiler Yanlış Girildi,Tekrar Deneyiniz";

@@ -33,8 +33,9 @@ namespace DataAccess.Concrete.EntityFramework
         public DbSet<Skill> Skills { get; set; } 
         public DbSet<SocialLink> SocialLinks { get; set; }
 
-        public DbSet<Subscription> Subscriptions { get; set; } 
+        public DbSet<Subscription> Subscriptions { get; set; }
 
+        public DbSet<ProjectPhotos> ProjectPhotos { get; set; } 
 
 
     }

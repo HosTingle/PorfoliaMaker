@@ -23,10 +23,25 @@ namespace Core.Extensions
             {
                 await _next(httpContext);
             }
-            catch (Exception e)
+            catch (AuthorizationException ex)
             {
-                await HandleExceptionAsync(httpContext, e);
+                await HandleAuthorizationExceptionAsync(httpContext, ex);
             }
+            catch (Exception ex)
+            {
+                await HandleExceptionAsync(httpContext, ex);
+            }
+        }
+        private Task HandleAuthorizationExceptionAsync(HttpContext httpContext, AuthorizationException ex)
+        {
+            httpContext.Response.ContentType = "application/json";
+            httpContext.Response.StatusCode = StatusCodes.Status403Forbidden; 
+
+            return httpContext.Response.WriteAsync(new ErrorDetails
+            {
+                StatusCode = httpContext.Response.StatusCode,
+                Message = ex.Message
+            }.ToString());
         }
 
         private Task HandleExceptionAsync(HttpContext httpContext, Exception e)

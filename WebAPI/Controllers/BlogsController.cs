@@ -7,7 +7,7 @@ namespace WebAPI.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class BlogsController : ControllerBase
+    public class BlogsController : BaseController
     {
         IBlogService _blogService;
 
@@ -29,10 +29,10 @@ namespace WebAPI.Controllers
 
         }
         [HttpGet("getAllByUserId")] 
-        public IActionResult GetAllByUserId(int id) 
+        public IActionResult GetAllByUserId() 
         {
-
-            var result = _blogService.GetAllByUserId(id); 
+            int userId = GetUserIdFromToken();
+            var result = _blogService.GetAllByUserId(userId); 
             if (result.Success)
             {
                 return Ok(result);

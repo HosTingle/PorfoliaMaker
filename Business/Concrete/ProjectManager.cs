@@ -33,13 +33,18 @@ namespace Business.Concrete
 
         public IDataResult<List<Project>> GetAll()
         { 
-            //İş Kodları
+
             return new SuccessDataResult<List<Project>>( _projectsDal.GetAll());
         }
+
 
         public IDataResult<Project> GetById(int id) 
         {
             return new SuccessDataResult<Project>(_projectsDal.Get(c=>c.ProjectId==id));
+        }
+        public IDataResult<Project> GetProjectDetailByUserId(int id)  
+        {
+            return new SuccessDataResult<Project>(_projectsDal);
         }
 
         public IResult Update(Project project)
