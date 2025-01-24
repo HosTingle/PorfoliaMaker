@@ -29,6 +29,19 @@ namespace WebAPI.Controllers
 
 
         }
+        [HttpGet("getAllProjectDetailById")]
+        public IActionResult GetProjectDetailByUserId(int userId)
+        {
+
+            var result = _projectService.GetProjectDetailByUserId(userId);
+            if (result.Success)
+            {
+                return Ok(result);
+            }
+            return BadRequest(result);
+
+
+        }
         [HttpPost("add")]
         public IActionResult Add(Project project)
         {

@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace Entities.DTOs
 {
-    public class ProjectWithPhoto:IDto
+    public class ProjectWithPhotoDto:IDto
     {
         public int ProjectId { get; set; }
 
@@ -17,6 +17,6 @@ namespace Entities.DTOs
         public string Description { get; set; }
         public string ProjectUrl { get; set; }
         public DateTime CreatedAt { get; set; }
-        public string ProjectPhotoId { get; set; }
+        public string ProjectPhotoUrl { get; set; } 
     }
 }

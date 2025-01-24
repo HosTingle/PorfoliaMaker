@@ -11,6 +11,6 @@ namespace DataAccess.Abstract
 {
     public interface IProjectDal:IEntityRepository<Project>
     {
-        public ProjectWithPhoto ProjectWithPhoto();
+        public List<ProjectWithPhotoDto> GetAllByIdProjectWithPhoto(int userId);  
     }
 }

@@ -12,27 +12,27 @@ namespace DataAccess.Concrete.EntityFramework
 {
     public class EfProjectDal:EfEntityRepositoryBase<Project,PortfContext>,IProjectDal
     {
-        public ProjectWithPhoto ProjectWithPhoto()
+        public List<ProjectWithPhotoDto>  GetAllByIdProjectWithPhoto(int userId) 
         {
             using (PortfContext context = new PortfContext())
             {
                 var result = from u in context.Projects
                              join p in context.ProjectPhotos
                              on u.ProjectPhotoId equals p.ProjectPhotoId
-                             select new ProjectWithPhoto
+                             select new ProjectWithPhotoDto
                              {
                                 ProjectId = u.ProjectId,
-                                UserId = u.UserId,
+                                UserId = u.UserId, 
                                 CreatedAt = u.CreatedAt,
+                                Title=u.Title,
                                 Description = u.Description,
-                                ProjectPhotoId=p.ProjectPhotoUrl,
+                                ProjectPhotoUrl=p.ProjectPhotoUrl,
                                 ProjectUrl = u.ProjectUrl
                                
 
 
                              };
-                return result.FirstOrDefault();
-
+                return result.ToList();
 
             }
         }

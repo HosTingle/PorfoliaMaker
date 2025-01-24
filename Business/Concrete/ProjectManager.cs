@@ -2,6 +2,7 @@
 using Core.Utilities.Results;
 using DataAccess.Abstract;
 using Entities.Concrete;
+using Entities.DTOs;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -42,9 +43,9 @@ namespace Business.Concrete
         {
             return new SuccessDataResult<Project>(_projectsDal.Get(c=>c.ProjectId==id));
         }
-        public IDataResult<Project> GetProjectDetailByUserId(int id)  
+        public IDataResult<List<ProjectWithPhotoDto>> GetProjectDetailByUserId(int userId)   
         {
-            return new SuccessDataResult<Project>(_projectsDal);
+            return new SuccessDataResult<List<ProjectWithPhotoDto>>(_projectsDal.GetAllByIdProjectWithPhoto(userId));
         }
 
         public IResult Update(Project project)
