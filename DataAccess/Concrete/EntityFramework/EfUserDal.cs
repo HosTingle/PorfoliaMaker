@@ -55,43 +55,52 @@ namespace DataAccess.Concrete.EntityFramework
             }
 
         }
-        public UserAllInfoDto GetUsersAllInfo(int userId)
-        {
-            using (PortfContext context = new PortfContext())
-            {
-                var user = context.Users.Where(u => u.UserId == userId)
-                                         .Select(u => new UserAllInfoDto
-                                         {
-                                             Name = u.FullName,
-                                             NickName=u.NickName,
-                                             ProfilePhoto=u.ProfilePhoto,
-                                             Skills = context.Skills.Where(s => s.UserId == u.UserId).ToList(),
-                                             Certificates = context.Certificates.Where(c => c.UserId == u.UserId).ToList(),
-                                             Projects = context.Projects.Where(p => p.UserId == u.UserId).ToList(),
-                                             Blogs = context.Blogs.Where(b => b.UserId == u.UserId).ToList(),
-                                             Comments = context.Comments.Where(co => co.UserId == u.UserId).ToList(),
-                              
-                                             Github = context.SocialLinks.Where(sl => sl.UserId == u.UserId && sl.Platform.ToLower() == "github").Select(sl => sl.Url).FirstOrDefault() ?? "No GitHub",
-                                             LinkedIn = context.SocialLinks.Where(sl => sl.UserId == u.UserId && sl.Platform.ToLower() == "linkedin").Select(sl => sl.Url).FirstOrDefault() ?? "No LinkedIn",
-                                             Website = context.SocialLinks.Where(sl => sl.UserId == u.UserId && sl.Platform.ToLower() == "website").Select(sl => sl.Url).FirstOrDefault() ?? "No Website",
+     public UserAllInfoDto GetUsersAllInfo(int userId)
+{
+    using (PortfContext context = new PortfContext())
+    {
+        var user = context.Users.Where(u => u.UserId == userId)
+                                 .Select(u => new UserAllInfoDto
+                                 {
+                                     Name = u.FullName,
+                                     NickName = u.NickName,
+                                     ProfilePhoto = u.ProfilePhoto,
+                                     Skills = context.Skills.Where(s => s.UserId == u.UserId).ToList(),
+                                     Certificates = context.Certificates.Where(c => c.UserId == u.UserId).ToList(),
+                                     Projects = context.Projects
+                                                        .Where(p => p.UserId == u.UserId)
+                                                        .Select(p => new ProjectDto
+                                                        {
+                                                            ProjectId = p.ProjectId,
+                                                            Title = p.Title,
+                                                            CreatedAt=p.CreatedAt,
+                                                            UserId=p.UserId,
+                                                            Description = p.Description,
+                                                            PhotosUrls = context.ProjectPhotos
+                                                                            .Where(pp => pp.ProjectPhotoId == p.ProjectPhotoId)
+                                                                            .Select(pp => new ProjectPhotoDto
+                                                                            {
+                                                                                ProjectPhotoUrl=pp.ProjectPhotoUrl,
+                                                                                ProjectPhotoId = pp.ProjectPhotoId,
+                                                                   
+                                                                            })
+                                                                            .ToList()
+                                                        })
+                                                        .ToList(),
+                                     Blogs = context.Blogs.Where(b => b.UserId == u.UserId).ToList(),
+                                     Comments = context.Comments.Where(co => co.UserId == u.UserId).ToList(),
+                                     
+                                     Github = context.SocialLinks.Where(sl => sl.UserId == u.UserId && sl.Platform.ToLower() == "github").Select(sl => sl.Url).FirstOrDefault() ?? "No GitHub",
+                                     LinkedIn = context.SocialLinks.Where(sl => sl.UserId == u.UserId && sl.Platform.ToLower() == "linkedin").Select(sl => sl.Url).FirstOrDefault() ?? "No LinkedIn",
+                                     Website = context.SocialLinks.Where(sl => sl.UserId == u.UserId && sl.Platform.ToLower() == "website").Select(sl => sl.Url).FirstOrDefault() ?? "No Website",
+                                 })
+                                 .AsEnumerable()
+                                 .FirstOrDefault();
 
+        return user ?? null;
+    }
+}
 
-                                         })
-                                         .AsEnumerable()
-                                         .FirstOrDefault();
-
-                if (user != null)
-                {
-                    return user;
-                }
-                else
-                {
-
-                    return null;
-           
-                }
-            }
-        }
 
         public UserById GetUserById(int id)
         {

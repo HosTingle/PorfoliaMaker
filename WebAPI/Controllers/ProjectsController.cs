@@ -7,7 +7,7 @@ namespace WebAPI.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class ProjectsController : ControllerBase
+    public class ProjectsController : BaseController
     {
         IProjectService _projectService;
 
@@ -30,9 +30,9 @@ namespace WebAPI.Controllers
 
         }
         [HttpGet("getAllProjectDetailById")]
-        public IActionResult GetProjectDetailByUserId(int userId)
+        public IActionResult GetProjectDetailByUserId()
         {
-
+            int userId = GetUserIdFromToken();
             var result = _projectService.GetProjectDetailByUserId(userId);
             if (result.Success)
             {

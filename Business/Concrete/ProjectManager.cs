@@ -1,4 +1,5 @@
 ﻿using Business.Abstract;
+using Business.BusinessAspects.Autofac;
 using Core.Utilities.Results;
 using DataAccess.Abstract;
 using Entities.Concrete;
@@ -43,6 +44,7 @@ namespace Business.Concrete
         {
             return new SuccessDataResult<Project>(_projectsDal.Get(c=>c.ProjectId==id));
         }
+        [SecuredOperation("user")]
         public IDataResult<List<ProjectWithPhotoDto>> GetProjectDetailByUserId(int userId)   
         {
             return new SuccessDataResult<List<ProjectWithPhotoDto>>(_projectsDal.GetAllByIdProjectWithPhoto(userId));

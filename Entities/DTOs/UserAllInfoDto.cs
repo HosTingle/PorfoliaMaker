@@ -28,7 +28,7 @@ namespace Entities.DTOs
 
         public List<SocialLink> socialLinks { get; set; }
 
-        public List<Project> Projects { get; set; }
+        public List<ProjectDto> Projects { get; set; }
 
         public List<Blog> Blogs { get; set; }
 
