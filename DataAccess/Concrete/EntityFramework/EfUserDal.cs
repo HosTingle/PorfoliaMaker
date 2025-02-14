@@ -10,6 +10,7 @@ using System.IO.MemoryMappedFiles;
 using Core.DataAccess.EntityFramework;
 using Entities.DTOs;
 using Core.Entities.Concrete;
+using Entities.Concrete;
 namespace DataAccess.Concrete.EntityFramework
 {
     public class EfUserDal : EfEntityRepositoryBase<User, PortfContext>, IUserDal
@@ -48,6 +49,7 @@ namespace DataAccess.Concrete.EntityFramework
                                  Title = p.Title,
                                  Status=u.Status,
                                  
+                                 
                              };
                 return result.ToList();
 
@@ -77,11 +79,13 @@ namespace DataAccess.Concrete.EntityFramework
                                                             UserId=p.UserId,
                                                             Description = p.Description,
                                                             PhotosUrls = context.ProjectPhotos
-                                                                            .Where(pp => pp.ProjectPhotoId == p.ProjectPhotoId)
+                                                                            .Where(pp => pp.ProjectId == p.ProjectId)
                                                                             .Select(pp => new ProjectPhotoDto
                                                                             {
                                                                                 ProjectPhotoUrl=pp.ProjectPhotoUrl,
+                                                                                ProjectId=pp.ProjectId,
                                                                                 ProjectPhotoId = pp.ProjectPhotoId,
+                                                                                
                                                                    
                                                                             })
                                                                             .ToList()
@@ -89,10 +93,18 @@ namespace DataAccess.Concrete.EntityFramework
                                                         .ToList(),
                                      Blogs = context.Blogs.Where(b => b.UserId == u.UserId).ToList(),
                                      Comments = context.Comments.Where(co => co.UserId == u.UserId).ToList(),
-                                     
+                                     EducationInfo=context.EducationInfo.Where(ed=>ed.UserId==u.UserId).ToList(),
+                                     ForeignLanguage=context.ForeignLanguage.Where(fo=>fo.UserId==u.UserId).ToList(),
+                                     WorkExperiences = context.WorkExperience.Where(we => we.UserId == u.UserId).ToList(),
                                      Github = context.SocialLinks.Where(sl => sl.UserId == u.UserId && sl.Platform.ToLower() == "github").Select(sl => sl.Url).FirstOrDefault() ?? "No GitHub",
                                      LinkedIn = context.SocialLinks.Where(sl => sl.UserId == u.UserId && sl.Platform.ToLower() == "linkedin").Select(sl => sl.Url).FirstOrDefault() ?? "No LinkedIn",
                                      Website = context.SocialLinks.Where(sl => sl.UserId == u.UserId && sl.Platform.ToLower() == "website").Select(sl => sl.Url).FirstOrDefault() ?? "No Website",
+                                     UserInfo = context.UserInfo
+                                            .Where(ui => ui.UserInfoId == context.Users
+                                                                              .Where(us => us.UserId == u.UserId)
+                                                                              .Select(us => us.UserInfoId)
+                                                                              .FirstOrDefault())
+                                            .FirstOrDefault()
                                  })
                                  .AsEnumerable()
                                  .FirstOrDefault();

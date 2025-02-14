@@ -12,5 +12,8 @@ namespace Entities.DTOs
         public int ProjectPhotoId { get; set; }
 
         public string ProjectPhotoUrl { get; set; }
+
+
+        public int ProjectId { get; set; }
     }
 }

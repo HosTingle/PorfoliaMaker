@@ -35,7 +35,17 @@ namespace DataAccess.Concrete.EntityFramework
 
         public DbSet<Subscription> Subscriptions { get; set; }
 
-        public DbSet<ProjectPhotos> ProjectPhotos { get; set; } 
+        public DbSet<ProjectPhoto> ProjectPhotos { get; set; }
+
+        public DbSet<WorkExperience> WorkExperience { get; set; }
+        public DbSet<EducationInfo> EducationInfo { get; set; }     
+
+        public DbSet<ForeignLanguage> ForeignLanguage { get; set; }
+
+        public DbSet<UserInfo> UserInfo { get; set; }    
+
+       
+
 
 
     }

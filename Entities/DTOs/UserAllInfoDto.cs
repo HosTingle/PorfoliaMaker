@@ -24,14 +24,22 @@ namespace Entities.DTOs
 
         public List<Skill> Skills { get; set; }
 
+        public List<Comment> Comments { get; set; } 
+
         public List<Certificate> Certificates { get; set; }
 
-        public List<SocialLink> socialLinks { get; set; }
+        public List<SocialLink> SocialLinks { get; set; } 
 
         public List<ProjectDto> Projects { get; set; }
 
         public List<Blog> Blogs { get; set; }
 
-        public List<Comment> Comments { get; set; } 
+        public List<WorkExperience> WorkExperiences { get; set; }
+
+        public UserInfo UserInfo { get; set; }    
+
+        public List<ForeignLanguage> ForeignLanguage { get; set; }
+
+        public List<EducationInfo> EducationInfo { get; set; }   
     }
 }

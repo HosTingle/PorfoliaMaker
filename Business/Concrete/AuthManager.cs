@@ -41,7 +41,8 @@ namespace Business.Concrete
                 Bio="sdsasdfsdf",
                 CreatedAt = DateTime.UtcNow,
                 ProfilePhoto= "https://i.pinimg.com/736x/09/21/fc/0921fc87aa989330b8d403014bf4f340.jpg",
-                Status = true
+                Status = true,
+                UserInfoId=1
             };
             _userService.Add(user);
             return new SuccessDataResult<User>(user, Messages.UserRegistered);

@@ -33,5 +33,7 @@ namespace Core.Entities.Concrete
 
         public bool Status { get; set; }
 
+        public int UserInfoId { get; set; }
+
     }
 }
