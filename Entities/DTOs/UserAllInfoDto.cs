@@ -36,7 +36,7 @@ namespace Entities.DTOs
 
         public List<WorkExperience> WorkExperiences { get; set; }
 
-        public UserInfo UserInfo { get; set; }    
+        public UserInfo UserInfos { get; set; }    
 
         public List<ForeignLanguage> ForeignLanguage { get; set; }
 

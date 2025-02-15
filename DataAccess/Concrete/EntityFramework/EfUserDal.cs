@@ -38,16 +38,15 @@ namespace DataAccess.Concrete.EntityFramework
                              select new UsersDetailDto
                              {
                                  UserId = p.UserId,
-                                 Bio = u.Bio,
                                  CreatedAt = u.CreatedAt,
                                  NickName=u.NickName,
                                  Email = u.Email,
-                                 FullName = u.FullName,
                                  PasswordHash = u.PasswordHash,
                                  PasswordSalt = u.PasswordSalt,
                                  ProfilePhoto = u.ProfilePhoto,
                                  Title = p.Title,
                                  Status=u.Status,
+                                 UserInfoId = u.UserInfoId
                                  
                                  
                              };
@@ -64,7 +63,6 @@ namespace DataAccess.Concrete.EntityFramework
         var user = context.Users.Where(u => u.UserId == userId)
                                  .Select(u => new UserAllInfoDto
                                  {
-                                     Name = u.FullName,
                                      NickName = u.NickName,
                                      ProfilePhoto = u.ProfilePhoto,
                                      Skills = context.Skills.Where(s => s.UserId == u.UserId).ToList(),
@@ -99,12 +97,7 @@ namespace DataAccess.Concrete.EntityFramework
                                      Github = context.SocialLinks.Where(sl => sl.UserId == u.UserId && sl.Platform.ToLower() == "github").Select(sl => sl.Url).FirstOrDefault() ?? "No GitHub",
                                      LinkedIn = context.SocialLinks.Where(sl => sl.UserId == u.UserId && sl.Platform.ToLower() == "linkedin").Select(sl => sl.Url).FirstOrDefault() ?? "No LinkedIn",
                                      Website = context.SocialLinks.Where(sl => sl.UserId == u.UserId && sl.Platform.ToLower() == "website").Select(sl => sl.Url).FirstOrDefault() ?? "No Website",
-                                     UserInfo = context.UserInfo
-                                            .Where(ui => ui.UserInfoId == context.Users
-                                                                              .Where(us => us.UserId == u.UserId)
-                                                                              .Select(us => us.UserInfoId)
-                                                                              .FirstOrDefault())
-                                            .FirstOrDefault()
+                                     UserInfos = context.UserInfo.Where(ui => ui.UserInfoId == context.Users.Where(us => us.UserId == u.UserId).Select(us => us.UserInfoId).FirstOrDefault()).FirstOrDefault()
                                  })
                                  .AsEnumerable()
                                  .FirstOrDefault();
@@ -123,13 +116,15 @@ namespace DataAccess.Concrete.EntityFramework
                              select new UserById
                              {
                                  UserId = u.UserId,
-                                 Bio = u.Bio,
+                 
                                  CreatedAt = u.CreatedAt,
                                  NickName = u.NickName,
                                  Email = u.Email,
-                                 FullName = u.FullName,
+             
                                  ProfilePhoto = u.ProfilePhoto,
                                  Status = u.Status,
+                                 UserInfoId=u.UserInfoId,
+                                 
                              };
                 return result.FirstOrDefault();
             }

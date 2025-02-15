@@ -15,8 +15,6 @@ namespace Core.Entities.Concrete
         [Key]
         public int UserId { get; set; }
 
-        public string FullName { get; set; }
-
         public string NickName { get; set; }
 
         public string Email { get; set; }
@@ -26,8 +24,6 @@ namespace Core.Entities.Concrete
         public byte[] PasswordHash { get; set; }
 
         public string ProfilePhoto { get; set; }
-
-        public string Bio { get; set; }
 
         public DateTime CreatedAt { get; set; }
 

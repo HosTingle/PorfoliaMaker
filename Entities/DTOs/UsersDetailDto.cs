@@ -14,8 +14,6 @@ namespace Entities.DTOs
         [Key]
         public int UserId { get; set; }
 
-        public string FullName { get; set; }
-
         public string NickName { get; set; }
         public string Email { get; set; }
 
@@ -25,7 +23,6 @@ namespace Entities.DTOs
 
         public string ProfilePhoto { get; set; }
 
-        public string Bio { get; set; }
 
         public DateTime CreatedAt { get; set; }
 

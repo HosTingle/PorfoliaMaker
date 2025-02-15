@@ -33,6 +33,8 @@ namespace Entities.Concrete
 
         public string? SalaryException {  get; set; }
 
+        public string Bio { get; set; }
 
+        public string FullName { get; set; }
     }
 }

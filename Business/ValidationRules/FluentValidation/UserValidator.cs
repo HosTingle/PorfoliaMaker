@@ -13,10 +13,7 @@ namespace Business.ValidationRules.FluentValidation
         public UserValidator()
         {
    
-            RuleFor(u=>u.FullName).NotEmpty();
-            RuleFor(u=>u.FullName).MinimumLength(2);
             RuleFor(u=>u.Email).NotEmpty();
-            RuleFor(u => u.Bio.Length).GreaterThanOrEqualTo(10).When(u => u.UserId == 1);
         }
        
     }

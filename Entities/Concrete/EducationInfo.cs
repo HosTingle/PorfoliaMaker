@@ -25,5 +25,9 @@ namespace Entities.Concrete
 
         public int UserId {  get; set; }
 
+        public string UniversityName {  get; set; }
+
+        public string Department { get; set; } 
+
     }
 }
