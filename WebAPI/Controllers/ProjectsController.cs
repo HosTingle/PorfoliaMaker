@@ -45,7 +45,8 @@ namespace WebAPI.Controllers
         [HttpPost("add")]
         public IActionResult Add(Project project)
         {
-
+            int userId = GetUserIdFromToken();
+            project.UserId = userId;
             var result = _projectService.Add(project);
             if (result.Success)
             {

@@ -21,7 +21,6 @@ namespace Business.Concrete
             _blogDal = blogDal;
         }
 
-        [SecuredOperation("admin")]
         public IResult Add(Blog blog)
         {
             _blogDal.Add(blog);

@@ -41,10 +41,12 @@ namespace WebAPI.Controllers
 
 
         }
+
         [HttpPost("add")]
         public IActionResult Add(Blog blog) 
         {
-
+             int userId = GetUserIdFromToken();
+            blog.UserId = userId;
             var result = _blogService.Add(blog);
             if (result.Success)
             {

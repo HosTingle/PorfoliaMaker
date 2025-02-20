@@ -6,6 +6,7 @@ using Business.Concrete;
 using Castle.DynamicProxy;
 using Core.Utilities.Interceptors;
 using Core.Utilities.Security.JWT;
+using Core.Utilities.UploadPhoto.PhotoUpload;
 using DataAccess.Abstract;
 using DataAccess.Concrete.EntityFramework;
 using Microsoft.AspNetCore.Http;
@@ -15,12 +16,15 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Business.DependencyResolvers.Autofac 
+namespace Business.DependencyResolvers.Autofac
 {
     public class AutofacBusinessModule:Module
     {
         protected override void Load(ContainerBuilder builder)
         {
+            builder.Register(ctx => new HttpClient())
+               .As<HttpClient>()
+               .SingleInstance();
             builder.RegisterType<UserManager>().As<IUserService>().SingleInstance();
             builder.RegisterType<EfUserDal>().As<IUserDal>().SingleInstance();
 
@@ -56,6 +60,8 @@ namespace Business.DependencyResolvers.Autofac
 
             builder.RegisterType<AuthManager>().As<IAuthService>();
             builder.RegisterType<JwtHelper>().As<ITokenHelper>();
+            builder.RegisterType<PhotoManager>().As<IPhotoService>();
+
 
 
             var assembly = System.Reflection.Assembly.GetExecutingAssembly();
