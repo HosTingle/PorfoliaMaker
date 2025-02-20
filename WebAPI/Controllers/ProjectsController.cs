@@ -1,5 +1,6 @@
 ﻿using Business.Abstract;
 using Entities.Concrete;
+using Entities.DTOs;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
@@ -46,6 +47,7 @@ namespace WebAPI.Controllers
         public IActionResult Add(Project project)
         {
             int userId = GetUserIdFromToken();
+
             project.UserId = userId;
             var result = _projectService.Add(project);
             if (result.Success)
@@ -94,6 +96,18 @@ namespace WebAPI.Controllers
             return BadRequest(result);
 
 
+        }
+        [HttpPost("AddProjectWithPhoto")]
+        public IActionResult AddProjectWithPhoto(ProjectWithPhotoDto projectWithPhotoDto)
+        {
+            int userId = GetUserIdFromToken();
+            projectWithPhotoDto.UserId = userId;    
+            var result=_projectService.AddPhotoWithProject(projectWithPhotoDto);
+            if (result.Success)
+            {
+                return Ok(result);
+            }
+            return BadRequest(result);
         }
     }
 }

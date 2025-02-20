@@ -21,6 +21,7 @@ namespace Business.Abstract
         IResult Update(Project project);
 
         IResult Delete(Project project);
+        IResult AddPhotoWithProject(ProjectWithPhotoDto projectWithPhotoDto);
 
         IDataResult<List<ProjectWithPhotoDto>> GetProjectDetailByUserId(int userId);
     }

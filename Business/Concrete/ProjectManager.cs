@@ -1,9 +1,13 @@
 ﻿using Business.Abstract;
 using Business.BusinessAspects.Autofac;
+using Business.Constants;
+using Core.Entities.Concrete;
+using Core.Utilities.Business;
 using Core.Utilities.Results;
 using DataAccess.Abstract;
 using Entities.Concrete;
 using Entities.DTOs;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -15,18 +19,43 @@ namespace Business.Concrete
     public class ProjectManager : IProjectService
     {
         IProjectDal _projectsDal;
-
-        public ProjectManager(IProjectDal projectsDal)
+        IProjectPhotoService _projectPhotoService; 
+        public ProjectManager(IProjectDal projectsDal,IProjectPhotoService projectPhotoService) 
         {
             _projectsDal = projectsDal;
+            _projectPhotoService = projectPhotoService;
         }
 
+        public IResult AddPhotoWithProject(ProjectWithPhotoDto projectWithPhotoDto) 
+        {
+            Project project = new Project
+            {
+                UserId = projectWithPhotoDto.UserId,
+                ProjectId = projectWithPhotoDto.ProjectId,
+                CreatedAt = projectWithPhotoDto.CreatedAt,
+                Description = projectWithPhotoDto.Description,
+                ProjectUrl = projectWithPhotoDto.ProjectUrl,
+                Title = projectWithPhotoDto.Title,
+            };
+            IResult result = Add(project); 
+            if (!result.Success)
+            {
+                return result;
+            }
+            projectWithPhotoDto.ProjectId= GetByTitle(project).ProjectId;
+
+            if (AddProjectPhoto(projectWithPhotoDto).Success)
+            {
+                return new SuccessResult(Messages.ProjectEklendi);
+            }
+            return new ErrorResult(Messages.ProjectEklendi);
+
+        }
         public IResult Add(Project project)
         {
-            _projectsDal.Add(project);
+            _projectsDal.Add(project); 
             return new SuccessResult();
         }
-
         public IResult Delete(Project project)
         {
             _projectsDal.Delete(project);
@@ -54,6 +83,24 @@ namespace Business.Concrete
         {
             _projectsDal.Update(project);
             return new SuccessResult();
+        }
+        public IResult AddProjectPhoto(ProjectWithPhotoDto projectWithPhotoDto)
+        {
+            ProjectPhoto projectPhoto = new ProjectPhoto
+            {
+                ProjectId = projectWithPhotoDto.ProjectId,
+                ProjectPhotoUrl = projectWithPhotoDto.ProjectPhotoUrl,
+            };
+            var result = _projectPhotoService.Add(projectPhoto);
+            if (result.Success ){
+                return new SuccessResult();
+            }
+            return new ErrorResult("Profil Photo Eklenemedi");
+
+        }
+        public Project GetByTitle(Project project)
+        {
+            return _projectsDal.Get(p=>p.Title==project.Title);
         }
     }
 }

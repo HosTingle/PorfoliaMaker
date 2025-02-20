@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Core.Entities.Concrete
 {
-    public class ImageUploadResponse:IEntity
+    public class ImageUploadResponse
     {
         public string Id { get; set; }
         public string Title { get; set; }

@@ -47,6 +47,8 @@ namespace Business.DependencyResolvers.Autofac
             builder.RegisterType<SkillManager>().As<ISkillService>().SingleInstance();
             builder.RegisterType<EfSkillDal>().As<ISkillDal>().SingleInstance();
 
+            builder.RegisterType<ProjectPhotoManager>().As<IProjectPhotoService>().SingleInstance();
+            builder.RegisterType<EfProjectPhotoDal>().As<IProjectPhotoDal>().SingleInstance();
 
             builder.RegisterType<SocialLinkManager>().As<ISocialLinkService>().SingleInstance();
             builder.RegisterType<EfSocialLinkDal>().As<ISocialLinkDal>().SingleInstance();

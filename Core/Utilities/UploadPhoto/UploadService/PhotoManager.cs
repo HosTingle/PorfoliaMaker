@@ -1,6 +1,10 @@
-﻿using Core.Entities.Concrete;
+﻿
+using Core.Entities.Concrete;
 using Core.Utilities.Results;
+using Core.Utilities.Security.JWT;
+using Core.Utilities.UploadPhoto.UploadService;
 using Microsoft.AspNetCore.Http;
+using Microsoft.Extensions.Configuration;
 using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
@@ -14,9 +18,13 @@ namespace Core.Utilities.UploadPhoto.PhotoUpload
     public class PhotoManager : IPhotoService
     {
         private readonly HttpClient _httpClient;
-
-        public PhotoManager(HttpClient httpClient)
+        public IConfiguration Configuration { get; }
+        private ImageBB _ImageBB; 
+        public PhotoManager(HttpClient httpClient, IConfiguration configuration)
         {
+            Configuration = configuration;
+            _ImageBB = Configuration.GetSection("ImageBB") 
+                 .Get<ImageBB>();
             _httpClient = httpClient;
         }
 
@@ -34,7 +42,7 @@ namespace Core.Utilities.UploadPhoto.PhotoUpload
 
                     content.Add(imageContent, "image", image.FileName);
 
-                    string imgbbApiKey = "e27a1de8d0ddfbbf8b0c674ab357725b";
+                    string imgbbApiKey = _ImageBB.ImageBBKey;
                     string imgbbUrl = $"https://api.imgbb.com/1/upload?key={imgbbApiKey}";
 
                     var response = _httpClient.PostAsync(imgbbUrl, content).Result;  // Senkron hale getirildi

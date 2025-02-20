@@ -4,9 +4,10 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Business.Concrete
+namespace Core.Utilities.UploadPhoto.UploadService
 {
-    internal class JwtManager
+    public class ImageBB
     {
+        public string ImageBBKey { get; set; }
     }
 }

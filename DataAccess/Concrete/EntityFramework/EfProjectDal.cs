@@ -18,7 +18,7 @@ namespace DataAccess.Concrete.EntityFramework
             {
                 var result = from u in context.Projects
                              join p in context.ProjectPhotos
-                             on u.ProjectPhotoId equals p.ProjectPhotoId
+                             on u.ProjectId equals p.ProjectId
                              where u.UserId == userId // Kullanıcı ID'sine göre filtreleme
                              select new ProjectWithPhotoDto
                              {
