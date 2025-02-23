@@ -67,11 +67,19 @@ namespace Business.Concrete
 
             return new SuccessDataResult<List<Project>>( _projectsDal.GetAll());
         }
+        public IDataResult<List<ProjectDto>> GetAllProjectWithPhotos(int id) 
+        {
 
+            return new SuccessDataResult<List<ProjectDto>>(_projectsDal.GetAllByIdProjectWithPhotos(id));
+        }
 
         public IDataResult<Project> GetById(int id) 
         {
             return new SuccessDataResult<Project>(_projectsDal.Get(c=>c.ProjectId==id));
+        }
+        public IDataResult<List<Project>> GetByUserId(int id) 
+        {
+            return new SuccessDataResult<List<Project>>(_projectsDal.GetAll(c => c.UserId == id));
         }
         [SecuredOperation("user")]
         public IDataResult<List<ProjectWithPhotoDto>> GetProjectDetailByUserId(int userId)   
@@ -102,5 +110,6 @@ namespace Business.Concrete
         {
             return _projectsDal.Get(p=>p.Title==project.Title);
         }
+
     }
 }

@@ -17,7 +17,7 @@ namespace Entities.Concrete
 
         public string Title { get; set; }
         public string Description{ get; set; }
-        public string ProjectUrl{ get; set; }
+        public string? ProjectUrl{ get; set; }
         public DateTime CreatedAt { get; set; }
     }
 }

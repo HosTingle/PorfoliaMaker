@@ -34,5 +34,34 @@ namespace DataAccess.Concrete.EntityFramework
                 return result.ToList();
             }
         }
+        public List<ProjectDto> GetAllByIdProjectWithPhotos(int userId)
+        {
+            using (PortfContext context = new PortfContext())
+            {
+                return context.Projects
+                    .Where(p => p.UserId == userId) // Kullanıcı ID'sine göre filtreleme
+                    .Select(p => new ProjectDto
+                    {
+                        ProjectId = p.ProjectId,
+                        Title = p.Title,
+                        CreatedAt = p.CreatedAt,
+                        UserId = p.UserId,
+                        Description = p.Description,
+                        ProjectUrl = p.ProjectUrl,
+                        PhotosUrls = context.ProjectPhotos
+                            .Where(pp => pp.ProjectId == p.ProjectId)
+                            .Select(pp => new ProjectPhotoDto
+                            {
+                                ProjectPhotoUrl = pp.ProjectPhotoUrl,
+                                ProjectId = pp.ProjectId,
+                                ProjectPhotoId = pp.ProjectPhotoId
+                            })
+                            .ToList()
+                    })
+                    .ToList();
+            }
+        }
+
     }
+
 }

@@ -30,11 +30,24 @@ namespace WebAPI.Controllers
 
 
         }
+        [HttpGet("getAllByUserId")] 
+        public IActionResult GetAllByUserId() 
+        {
+            int userId = GetUserIdFromToken();
+            var result = _projectService.GetByUserId(userId);
+            if (result.Success)
+            {
+                return Ok(result);
+            }
+            return BadRequest(result);
+
+
+        }
         [HttpGet("getAllProjectDetailById")]
         public IActionResult GetProjectDetailByUserId()
         {
             int userId = GetUserIdFromToken();
-            var result = _projectService.GetProjectDetailByUserId(userId);
+            var result = _projectService.GetAllProjectWithPhotos(userId);
             if (result.Success)
             {
                 return Ok(result);

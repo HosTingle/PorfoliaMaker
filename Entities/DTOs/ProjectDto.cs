@@ -18,6 +18,8 @@ namespace Entities.DTOs
         public string Description { get; set; }
 
         public DateTime CreatedAt { get; set; }
+
+        public string ProjectUrl { get; set; }
         public List<ProjectPhotoDto> PhotosUrls { get; set; }
     }
 }

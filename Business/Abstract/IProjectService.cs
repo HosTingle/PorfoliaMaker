@@ -13,6 +13,7 @@ namespace Business.Abstract
     public interface IProjectService
     {
         IDataResult<List<Project>> GetAll();
+        IDataResult<List<Project>> GetByUserId(int id);
 
         IDataResult<Project> GetById(int id); 
 
@@ -21,8 +22,10 @@ namespace Business.Abstract
         IResult Update(Project project);
 
         IResult Delete(Project project);
+
         IResult AddPhotoWithProject(ProjectWithPhotoDto projectWithPhotoDto);
 
         IDataResult<List<ProjectWithPhotoDto>> GetProjectDetailByUserId(int userId);
+        IDataResult<List<ProjectDto>> GetAllProjectWithPhotos(int id);
     }
 }
