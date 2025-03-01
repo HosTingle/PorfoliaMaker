@@ -19,5 +19,7 @@ namespace Business.Abstract
         IResult Delete(ProjectPhoto projectPhoto);
 
         IDataResult<ProjectPhoto> GetById(int id);
+
+        IDataResult<List<ProjectPhoto>> GetAllById(int id); 
     }
 }

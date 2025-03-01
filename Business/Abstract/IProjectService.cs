@@ -27,5 +27,7 @@ namespace Business.Abstract
 
         IDataResult<List<ProjectWithPhotoDto>> GetProjectDetailByUserId(int userId);
         IDataResult<List<ProjectDto>> GetAllProjectWithPhotos(int id);
+
+        IResult UpdatePhotoWithProject(ProjectWithPastPhotoDto projectWithPastPhotoDto);
     }
 }

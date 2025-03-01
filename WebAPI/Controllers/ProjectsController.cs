@@ -97,6 +97,20 @@ namespace WebAPI.Controllers
 
 
         }
+        [HttpPost("UpdateProjectWithPhoto")]
+        public IActionResult UpdateProjectWithPhoto(ProjectWithPastPhotoDto projectWithPastPhotoDto)  
+        {
+            int userId = GetUserIdFromToken();
+            projectWithPastPhotoDto.UserId = userId;
+            var result = _projectService.UpdatePhotoWithProject(projectWithPastPhotoDto);
+            if (result.Success)
+            {
+                return Ok(result);
+            }
+            return BadRequest(result);
+
+
+        }
         [HttpGet("getById")]
         public IActionResult getById(int id)
         {

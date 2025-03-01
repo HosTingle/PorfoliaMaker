@@ -42,10 +42,10 @@ namespace DataAccess.Concrete.EntityFramework
                     .Where(p => p.UserId == userId) // Kullanıcı ID'sine göre filtreleme
                     .Select(p => new ProjectDto
                     {
-                        ProjectId = p.ProjectId,
+
                         Title = p.Title,
                         CreatedAt = p.CreatedAt,
-                        UserId = p.UserId,
+
                         Description = p.Description,
                         ProjectUrl = p.ProjectUrl,
                         PhotosUrls = context.ProjectPhotos
@@ -59,6 +59,28 @@ namespace DataAccess.Concrete.EntityFramework
                             .ToList()
                     })
                     .ToList();
+            }
+        }
+        public ProjectWithPastPhotoDto GetProjetIdByUserId(ProjectWithPastPhotoDto projectWithPastPhotoDto) 
+        {
+            using (PortfContext context = new PortfContext())
+            {
+                var result = from u in context.Projects
+                             where u.UserId == projectWithPastPhotoDto.UserId
+                             where u.Title==projectWithPastPhotoDto.PastProjectTitle
+                             select new ProjectWithPastPhotoDto
+                             {
+                                 ProjectId = u.ProjectId,
+                                 UserId = u.UserId,
+                                 CreatedAt = u.CreatedAt,
+                                 Title = u.Title,
+                                 Description = u.Description,
+                                 ProjectPhotoUrl = projectWithPastPhotoDto.ProjectPhotoUrl,
+                                 ProjectUrl = u.ProjectUrl,
+                                 PastProjectTitle=u.Title,
+                             };
+
+                return result.SingleOrDefault()!;
             }
         }
 

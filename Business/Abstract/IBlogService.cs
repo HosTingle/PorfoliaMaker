@@ -14,15 +14,17 @@ namespace Business.Abstract
     {
         IDataResult<List<Blog>> GetAll();
 
-        IDataResult<List<Blog>> GetAllByUserId(int id); 
+        IDataResult<List<BlogSecureDto>> GetAllByUserId(int id); 
         IResult Add(Blog blog); 
         
         IResult Update(Blog blog);
 
+        IResult UpdateBlog(BlogDto blogDto); 
+
         IResult Delete(Blog blog);
 
         IDataResult<Blog> GetById(int id);
-
+        IResult AddBlog(BlogDto blogDto);
 
     }
 }

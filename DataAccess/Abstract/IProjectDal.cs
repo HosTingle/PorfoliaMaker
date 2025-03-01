@@ -13,5 +13,6 @@ namespace DataAccess.Abstract
     {
         List<ProjectWithPhotoDto> GetAllByIdProjectWithPhoto(int userId);
         List<ProjectDto> GetAllByIdProjectWithPhotos(int userId);
+        ProjectWithPastPhotoDto GetProjetIdByUserId(ProjectWithPastPhotoDto projectWithPastPhotoDto);
     }
 }

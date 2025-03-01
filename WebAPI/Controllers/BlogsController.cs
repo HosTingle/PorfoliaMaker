@@ -1,5 +1,6 @@
 ﻿using Business.Abstract;
 using Entities.Concrete;
+using Entities.DTOs;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
@@ -56,6 +57,20 @@ namespace WebAPI.Controllers
 
 
         }
+        [HttpPost("addBlog")]
+        public IActionResult AddBlog(BlogDto blog) 
+        {
+            int userId = GetUserIdFromToken();
+            blog.UserId = userId;
+            var result = _blogService.AddBlog(blog);
+            if (result.Success)
+            {
+                return Ok(result);
+            }
+            return BadRequest(result);
+
+
+        }
         [HttpPost("delete")]
         public IActionResult Delete(Blog blog) 
         {
@@ -72,8 +87,23 @@ namespace WebAPI.Controllers
         [HttpPost("update")]
         public IActionResult Update(Blog blog)
         {
-
+            int userId = GetUserIdFromToken();
+            blog.UserId= userId;
             var result = _blogService.Update(blog); 
+            if (result.Success)
+            {
+                return Ok(result);
+            }
+            return BadRequest(result);
+
+
+        }
+        [HttpPost("updateBlog")]
+        public IActionResult UpdateBlog(BlogDto blog) 
+        {
+            int userId = GetUserIdFromToken();
+            blog.UserId = userId;
+            var result = _blogService.UpdateBlog(blog);
             if (result.Success)
             {
                 return Ok(result);

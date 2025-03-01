@@ -32,7 +32,7 @@ namespace Entities.DTOs
 
         public List<ProjectDto> Projects { get; set; }
 
-        public List<Blog> Blogs { get; set; }
+        public List<BlogSecureDto> Blogs { get; set; }
 
         public List<WorkExperience> WorkExperiences { get; set; }
 

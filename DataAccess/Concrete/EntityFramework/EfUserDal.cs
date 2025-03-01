@@ -71,10 +71,10 @@ namespace DataAccess.Concrete.EntityFramework
                                                         .Where(p => p.UserId == u.UserId)
                                                         .Select(p => new ProjectDto
                                                         {
-                                                            ProjectId = p.ProjectId,
+                                       
                                                             Title = p.Title,
                                                             CreatedAt=p.CreatedAt,
-                                                            UserId=p.UserId,
+                     
                                                             Description = p.Description,
                                                             PhotosUrls = context.ProjectPhotos
                                                                             .Where(pp => pp.ProjectId == p.ProjectId)
@@ -89,7 +89,16 @@ namespace DataAccess.Concrete.EntityFramework
                                                                             .ToList()
                                                         })
                                                         .ToList(),
-                                     Blogs = context.Blogs.Where(b => b.UserId == u.UserId).ToList(),
+                                     Blogs = context.Blogs.Where(b => b.UserId == u.UserId).Select(p => new BlogSecureDto
+                                     {
+                                        BlogId=p.BlogId,
+                                        BlogPhoto=p.BlogPhoto,
+                                        Conte=p.Conte,
+                                        PublishedAt=p.PublishedAt,
+                                        Title = p.Title
+                                        
+                                     })
+                                                        .ToList(),
                                      Comments = context.Comments.Where(co => co.UserId == u.UserId).ToList(),
                                      EducationInfo=context.EducationInfo.Where(ed=>ed.UserId==u.UserId).ToList(),
                                      ForeignLanguage=context.ForeignLanguage.Where(fo=>fo.UserId==u.UserId).ToList(),

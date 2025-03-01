@@ -41,6 +41,10 @@ namespace Business.Concrete
         {
             return new SuccessDataResult<ProjectPhoto>(_projectPhotoDal.Get(p=>p.ProjectPhotoId==id));
         }
+        public IDataResult<List<ProjectPhoto>> GetAllById(int id )  
+        {
+            return new SuccessDataResult<List<ProjectPhoto>>(_projectPhotoDal.GetAll(p => p.ProjectId == id));
+        }
 
         public IResult Update(ProjectPhoto projectPhoto)
         {

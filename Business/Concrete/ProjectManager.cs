@@ -46,11 +46,12 @@ namespace Business.Concrete
 
             if (AddProjectPhoto(projectWithPhotoDto).Success)
             {
-                return new SuccessResult(Messages.ProjectEklendi);
+                return new SuccessResult(Messages.BlogNotAdd);
             }
-            return new ErrorResult(Messages.ProjectEklendi);
+            return new ErrorResult(Messages.BlogNotAdd);
 
         }
+
         public IResult Add(Project project)
         {
             _projectsDal.Add(project); 
@@ -101,6 +102,50 @@ namespace Business.Concrete
             };
             var result = _projectPhotoService.Add(projectPhoto);
             if (result.Success ){
+                return new SuccessResult();
+            }
+            return new ErrorResult("Profil Photo Eklenemedi");
+
+        }
+        public IResult UpdatePhotoWithProject(ProjectWithPastPhotoDto projectWithPastPhotoDto)
+        {
+            ProjectWithPastPhotoDto datawithProjectId= _projectsDal.GetProjetIdByUserId(projectWithPastPhotoDto);
+            Project project = new Project
+            { 
+                UserId = projectWithPastPhotoDto.UserId,
+                ProjectId = datawithProjectId.ProjectId,
+                CreatedAt = projectWithPastPhotoDto.CreatedAt,
+                Description = projectWithPastPhotoDto.Description,
+                ProjectUrl = projectWithPastPhotoDto.ProjectUrl,
+                Title = projectWithPastPhotoDto.Title,
+            };
+            IResult result = Update(project);
+            if (!result.Success)
+            {
+                return result;
+            }
+            projectWithPastPhotoDto.ProjectId = GetByTitle(project).ProjectId;
+
+            if (UpdateProjectPhoto(projectWithPastPhotoDto).Success)
+            {
+                return new SuccessResult(Messages.ProjectGüncellendi);
+            }
+            return new ErrorResult(Messages.ProjectGüncellenemedi);
+
+        }
+        public IResult UpdateProjectPhoto(ProjectWithPastPhotoDto projectWithPastPhotoDto) 
+        {
+         
+            List<ProjectPhoto> projectphotopast = _projectPhotoService.GetAllById(projectWithPastPhotoDto.ProjectId).Data;
+            ProjectPhoto projectPhoto = new ProjectPhoto  
+            {
+                ProjectId = projectWithPastPhotoDto.ProjectId,
+                ProjectPhotoUrl = projectWithPastPhotoDto.ProjectPhotoUrl,
+                ProjectPhotoId= projectphotopast[0].ProjectPhotoId,
+            };
+            var result = _projectPhotoService.Update(projectPhoto);
+            if (result.Success)
+            {
                 return new SuccessResult();
             }
             return new ErrorResult("Profil Photo Eklenemedi");

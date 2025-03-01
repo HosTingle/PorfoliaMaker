@@ -4,6 +4,7 @@ using Business.Constants;
 using Core.Utilities.Results;
 using DataAccess.Abstract;
 using Entities.Concrete;
+using Entities.DTOs;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -20,9 +21,51 @@ namespace Business.Concrete
         {
             _blogDal = blogDal;
         }
-
-        public IResult Add(Blog blog)
+        public IResult AddBlog(BlogDto blogDto) 
         {
+            Blog blog = new Blog
+            {
+                
+                Title = blogDto.Title,
+                BlogPhoto = blogDto.BlogPhoto,
+                Conte = blogDto.Conte,
+                PublishedAt = blogDto.PublishedAt,
+                UserId = blogDto.UserId
+                
+            };
+            IResult result = Add(blog);
+
+            if (result.Success)
+            {
+                return new SuccessResult(Messages.BlogAdd);
+            }
+            return new ErrorResult(Messages.BlogNotAdd);
+
+        }
+        public IResult UpdateBlog(BlogDto blogDto) 
+        {
+            Blog blog = new Blog
+            {
+                Title = blogDto.Title,
+                BlogPhoto = blogDto.BlogPhoto,
+                Conte = blogDto.Conte,
+                PublishedAt = blogDto.PublishedAt,
+                UserId = blogDto.UserId,
+                BlogId=blogDto.BlogId
+                
+            };
+            IResult result = Update(blog);
+
+            if (result.Success)
+            {
+                return new SuccessResult(Messages.BlogAdd);
+            }
+            return new ErrorResult(Messages.BlogNotAdd);
+
+        }
+        public IResult Add(Blog blog) 
+        {
+         
             _blogDal.Add(blog);
             return new SuccessResult(Messages.BlogAdd);
         }
@@ -35,12 +78,23 @@ namespace Business.Concrete
 
         public IDataResult<List<Blog>> GetAll()
         {
+
             return new SuccessDataResult<List<Blog>>(_blogDal.GetAll());
         }
         [SecuredOperation("user")]
-        public IDataResult<List<Blog>> GetAllByUserId(int id) 
+        public IDataResult<List<BlogSecureDto>> GetAllByUserId(int id)
         {
-            return new SuccessDataResult<List<Blog>>(_blogDal.GetAll(b=>b.UserId==id));
+            var blogs = _blogDal.GetAll(b => b.UserId == id)
+                                .Select(b => new BlogSecureDto
+                                {
+                                    BlogId = b.BlogId,
+                                    Title = b.Title,
+                                    Conte = b.Conte,
+                                    BlogPhoto = b.BlogPhoto,
+                                    PublishedAt = b.PublishedAt
+                                }).ToList();
+
+            return new SuccessDataResult<List<BlogSecureDto>>(blogs);
         }
 
         public IDataResult<Blog> GetById(int id)
@@ -50,8 +104,9 @@ namespace Business.Concrete
 
         public IResult Update(Blog blog)
         {
+            
             _blogDal.Update(blog);
-            return new SuccessResult();
+            return new SuccessResult(Messages.UpdateBlog);
         }
     }
 }

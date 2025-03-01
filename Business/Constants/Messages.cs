@@ -24,6 +24,11 @@ namespace Business.Constants
         public static string AccessTokenCreated;
         public static string BlogAdd ="Blog eklendi";
         public static string UserRoleErrorMesage="Bir hatadan dolayı, Rol eklenemedi";
-        public static string ProjectEklendi="Project Eklendi";
+        public static string BlogNotAdd="Project Eklenemedi";
+
+        public static string UpdateBlog = "Blog Güncellendi";
+
+        public static string ProjectGüncellendi = "Proje Güncellendi";
+        public static string ProjectGüncellenemedi = "Proje Güncelenemedi, sonra tekrar deneyin";
     }
 }
