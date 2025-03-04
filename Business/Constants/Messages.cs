@@ -25,10 +25,13 @@ namespace Business.Constants
         public static string BlogAdd ="Blog eklendi";
         public static string UserRoleErrorMesage="Bir hatadan dolayı, Rol eklenemedi";
         public static string BlogNotAdd="Project Eklenemedi";
-
         public static string UpdateBlog = "Blog Güncellendi";
+        public static string ProjectGüncellendi = "Proje güncellendi";
+        public static string ProjectGüncellenemedi = "Proje güncelenemedi, sonra tekrar deneyin";
+        public static string ProjectDelete=  "Proje silindi";
+        public static string ProjectNotDelete = "Proje silinemedi, sonra tekrar deneyin";
+        public static string DeleteBlog = "Blog silindi";
+        public static string DeleteBlogNot = "Blog silinemedi, sonra tekrar deneyin";
 
-        public static string ProjectGüncellendi = "Proje Güncellendi";
-        public static string ProjectGüncellenemedi = "Proje Güncelenemedi, sonra tekrar deneyin";
     }
 }

@@ -51,7 +51,50 @@ namespace Business.Concrete
             return new ErrorResult(Messages.BlogNotAdd);
 
         }
+        public IResult DeletePhototWithProject(ProjectWithPastPhotoDto projectWithPastPhotoDto) 
+        {
+            ProjectWithPastPhotoDto datawithProjectId = _projectsDal.GetProjetIdByUserId(projectWithPastPhotoDto);
+            if (DeleteProjectPhoto(datawithProjectId).Success)
+            {
+                Project project = new Project
+                {
+                    UserId = projectWithPastPhotoDto.UserId,
+                    ProjectId = datawithProjectId.ProjectId,
+                    CreatedAt = projectWithPastPhotoDto.CreatedAt,
+                    Description = projectWithPastPhotoDto.Description,
+                    ProjectUrl = projectWithPastPhotoDto.ProjectUrl,
+                    Title = projectWithPastPhotoDto.Title,
+                };
+                IResult result = Delete(project);
+                if (result.Success)
+                {
+                    return new SuccessResult(Messages.ProjectDelete);
+                }
+         
+     
+            }
+            return new ErrorResult(Messages.ProjectNotDelete); 
 
+
+
+        }
+        public IResult DeleteProjectPhoto(ProjectWithPastPhotoDto projectWithPastPhotoDto) 
+        {
+            List<ProjectPhoto> projectphotopast = _projectPhotoService.GetAllById(projectWithPastPhotoDto.ProjectId).Data;
+            ProjectPhoto projectPhoto = new ProjectPhoto
+            {
+                ProjectId = projectWithPastPhotoDto.ProjectId,
+                ProjectPhotoUrl = projectWithPastPhotoDto.ProjectPhotoUrl,
+                ProjectPhotoId = projectphotopast[0].ProjectPhotoId,
+            };
+            var result = _projectPhotoService.Delete(projectPhoto);
+            if (result.Success)
+            {
+                return new SuccessResult();
+            }
+            return new ErrorResult("Profil Photo Eklenemedi");
+
+        }
         public IResult Add(Project project)
         {
             _projectsDal.Add(project); 

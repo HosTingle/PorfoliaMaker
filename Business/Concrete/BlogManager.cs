@@ -73,7 +73,7 @@ namespace Business.Concrete
         public IResult Delete(Blog blog)
         {
             _blogDal.Delete(blog);
-            return new SuccessResult();
+            return new SuccessResult(Messages.DeleteBlog);
         }
 
         public IDataResult<List<Blog>> GetAll()

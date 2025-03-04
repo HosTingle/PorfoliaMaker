@@ -29,5 +29,6 @@ namespace Business.Abstract
         IDataResult<List<ProjectDto>> GetAllProjectWithPhotos(int id);
 
         IResult UpdatePhotoWithProject(ProjectWithPastPhotoDto projectWithPastPhotoDto);
+        IResult DeletePhototWithProject(ProjectWithPastPhotoDto projectWithPastPhotoDto);
     }
 }

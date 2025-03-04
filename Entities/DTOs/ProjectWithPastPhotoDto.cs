@@ -17,7 +17,7 @@ namespace Entities.DTOs
         public string Description { get; set; }
         public string? ProjectUrl { get; set; }
         public DateTime CreatedAt { get; set; }
-        public string ProjectPhotoUrl { get; set; }
+        public string? ProjectPhotoUrl { get; set; }
 
         public string PastProjectTitle { get; set; }    
     }

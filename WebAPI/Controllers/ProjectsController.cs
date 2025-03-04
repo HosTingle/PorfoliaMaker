@@ -30,7 +30,7 @@ namespace WebAPI.Controllers
 
 
         }
-        [HttpGet("getAllByUserId")] 
+        [HttpGet("getAllByUserId")]  
         public IActionResult GetAllByUserId() 
         {
             int userId = GetUserIdFromToken();
@@ -43,7 +43,7 @@ namespace WebAPI.Controllers
 
 
         }
-        [HttpGet("getAllProjectDetailById")]
+        [HttpGet("getallprojectdetailbyid")] 
         public IActionResult GetProjectDetailByUserId()
         {
             int userId = GetUserIdFromToken();
@@ -84,6 +84,21 @@ namespace WebAPI.Controllers
 
 
         }
+        [HttpPost("deleteprojectwithphoto")]
+        public IActionResult DeleteProjectWithPhoto(ProjectWithPastPhotoDto projectWithPastPhotoDto) 
+        {
+            int userId = GetUserIdFromToken();
+
+            projectWithPastPhotoDto.UserId = userId;
+            var result = _projectService.DeletePhototWithProject(projectWithPastPhotoDto);
+            if (result.Success)
+            {
+                return Ok(result);
+            }
+            return BadRequest(result);
+
+
+        }
         [HttpPost("update")]
         public IActionResult Update(Project project)
         {
@@ -97,7 +112,7 @@ namespace WebAPI.Controllers
 
 
         }
-        [HttpPost("UpdateProjectWithPhoto")]
+        [HttpPost("updateprojectwithphoto")] 
         public IActionResult UpdateProjectWithPhoto(ProjectWithPastPhotoDto projectWithPastPhotoDto)  
         {
             int userId = GetUserIdFromToken();
@@ -124,7 +139,7 @@ namespace WebAPI.Controllers
 
 
         }
-        [HttpPost("AddProjectWithPhoto")]
+        [HttpPost("addprojectwithphoto")]
         public IActionResult AddProjectWithPhoto(ProjectWithPhotoDto projectWithPhotoDto)
         {
             int userId = GetUserIdFromToken();

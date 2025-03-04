@@ -74,7 +74,8 @@ namespace WebAPI.Controllers
         [HttpPost("delete")]
         public IActionResult Delete(Blog blog) 
         {
-
+            int userId = GetUserIdFromToken();
+            blog.UserId = userId;
             var result = _blogService.Delete(blog);
             if (result.Success)
             {
