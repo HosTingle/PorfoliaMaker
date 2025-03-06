@@ -33,5 +33,11 @@ namespace Business.Constants
         public static string DeleteBlog = "Blog silindi";
         public static string DeleteBlogNot = "Blog silinemedi, sonra tekrar deneyin";
 
+        public static string UserInfoApplicantSucces = "Başvuru bilgileri güncellendi";
+
+        public static string UserInfoPersonalSucces = "Kişisel bilgileri güncellendi";
+
+        public static string UserInfoAboutSucces = "Bilgiler güncellendi"; 
+        public static string UserInfoAboutError = "Bilgiler güncellenirken hata oluştu";
     }
 }

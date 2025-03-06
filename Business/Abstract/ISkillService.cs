@@ -1,5 +1,6 @@
 ﻿using Core.Utilities.Results;
 using Entities.Concrete;
+using Entities.DTOs;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -19,5 +20,9 @@ namespace Business.Abstract
         IResult Delete(Skill skill);
 
         IDataResult<Skill> GetById(int id);
+
+        IDataResult<List<Skill>> GetAlById(int id);
+
+        IResult UpdateSkills(UserInfoAboutDto userInfoAboutDto);
     }
 }

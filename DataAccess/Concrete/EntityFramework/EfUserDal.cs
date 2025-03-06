@@ -138,5 +138,16 @@ namespace DataAccess.Concrete.EntityFramework
                 return result.FirstOrDefault();
             }
         }
+        public int GetUserInfoIdByUserId(int id)
+        {
+            using (PortfContext context = new PortfContext())
+            {
+                return context.Users
+                    .Where(u => u.UserId == id)
+                    .Select(u => u.UserInfoId)
+                    .FirstOrDefault();
+            }
+        }
+
     }
 }

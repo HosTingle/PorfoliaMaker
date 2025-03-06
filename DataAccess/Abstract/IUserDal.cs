@@ -18,5 +18,8 @@ namespace DataAccess.Abstract
         UserAllInfoDto GetUsersAllInfo(int id);
 
         UserById GetUserById(int id);
+
+        int GetUserInfoIdByUserId(int id);
+
     }
 }

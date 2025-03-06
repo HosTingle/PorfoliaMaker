@@ -2,6 +2,7 @@
 using Core.Utilities.Results;
 using DataAccess.Abstract;
 using Entities.Concrete;
+using Entities.DTOs;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -46,6 +47,15 @@ namespace Business.Concrete
         {
             _skillDal.Update(skill);
             return new SuccessResult();
+        }
+        public IDataResult<List<Skill>> GetAlById(int id) 
+        {
+            return new SuccessDataResult<List<Skill>>(_skillDal.GetAll(s=>s.UserId==id));
+        }
+
+        public IResult UpdateSkills(UserInfoAboutDto userInfoAboutDto)
+        {
+            throw new NotImplementedException();
         }
     }
 }
