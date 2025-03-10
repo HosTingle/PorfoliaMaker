@@ -8,20 +8,20 @@ namespace WebAPI.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class CertificatesController :BaseController
+    public class EducationInfoController :  BaseController
     {
-        ICertificateService _certificateService;
+        IEducationService _educationService;
 
-        public CertificatesController(ICertificateService certificateService)
+        public EducationInfoController(IEducationService educationService)
         {
-            _certificateService = certificateService;
+            _educationService = educationService;
         }
 
         [HttpGet("getAll")]
         public IActionResult GetAll()
         {
 
-            var result = _certificateService.GetAll();
+            var result = _educationService.GetAll();
             if (result.Success)
             {
                 return Ok(result);
@@ -31,10 +31,10 @@ namespace WebAPI.Controllers
 
         }
         [HttpPost("add")]
-        public IActionResult Add(Certificate certificate)
+        public IActionResult Add(EducationInfo educationInfo)
         {
 
-            var result = _certificateService.Add(certificate);
+            var result = _educationService.Add(educationInfo);
             if (result.Success)
             {
                 return Ok(result);
@@ -44,10 +44,10 @@ namespace WebAPI.Controllers
 
         }
         [HttpPost("delete")]
-        public IActionResult Delete(Certificate certificate)
+        public IActionResult Delete(EducationInfo educationInfo)
         {
 
-            var result = _certificateService.Delete(certificate);
+            var result = _educationService.Delete(educationInfo);
             if (result.Success)
             {
                 return Ok(result);
@@ -57,24 +57,10 @@ namespace WebAPI.Controllers
 
         }
         [HttpPost("update")]
-        public IActionResult Update(Certificate certificate)
+        public IActionResult Update(EducationInfo educationInfo)
         {
 
-            var result = _certificateService.Update(certificate);
-            if (result.Success)
-            {
-                return Ok(result);
-            }
-            return BadRequest(result);
-
-
-        }
-        [HttpPost("updatecertificate")]
-        public IActionResult UpdateCertificate(CertificatesDto certificatesDto) 
-        {
-            int userId = GetUserIdFromToken();
-            certificatesDto.UserId = userId;
-            var result = _certificateService.UpdateCertificate(certificatesDto);
+            var result = _educationService.Update(educationInfo);
             if (result.Success)
             {
                 return Ok(result);
@@ -87,7 +73,7 @@ namespace WebAPI.Controllers
         public IActionResult getById(int id)
         {
 
-            var result = _certificateService.GetById(id);
+            var result = _educationService.GetById(id);
             if (result.Success)
             {
                 return Ok(result);
@@ -100,8 +86,21 @@ namespace WebAPI.Controllers
         public IActionResult getByUserId() 
         {
             int userId = GetUserIdFromToken();
-            var result = _certificateService.GetByUserId(userId);
-            if (result.Success) 
+            var result = _educationService.GetByUserId(userId);
+            if (result.Success)
+            {
+                return Ok(result);
+            }
+            return BadRequest(result);
+
+
+        }
+        [HttpPost("updateeducation")]
+        public IActionResult educationUpdate(EducationInfoDto educationInfoDto) 
+        {
+            educationInfoDto.UserId = GetUserIdFromToken();
+            var result = _educationService.UpdateEducation(educationInfoDto);
+            if (result.Success)
             {
                 return Ok(result);
             }

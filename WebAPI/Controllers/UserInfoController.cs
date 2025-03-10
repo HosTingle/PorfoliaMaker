@@ -81,6 +81,19 @@ namespace WebAPI.Controllers
 
 
         }
+        [HttpGet("getByUserId")]
+        public IActionResult getByUserId() 
+        {
+            int userId = GetUserIdFromToken();
+            var result = _userInfoService.GetByUserId(userId);
+            if (result.Success)
+            {
+                return Ok(result);
+            }
+            return BadRequest(result);
+
+
+        }
         [HttpPost("UpdateUserInfoApplicant")]
         public IActionResult UpadateUserInfoApplicant(UserInfoApplicantDto userInfoApplicantDto)
         {
@@ -108,5 +121,19 @@ namespace WebAPI.Controllers
             return BadRequest(result);
 
         }
+        [HttpPost("UpdateUserInfoAbout")]
+        public IActionResult UpdateUserInfoAbout(UserInfoAboutDto userInfoAboutDto)
+        {
+            int userId = GetUserIdFromToken();
+            userInfoAboutDto.UserId = userId;
+            var result = _userInfoService.UpdateUserInfoAbout(userInfoAboutDto);
+            if (result.Success)
+            {
+                return Ok(result);
+            }
+            return BadRequest(result);
+
+        }
+      
     }
 }

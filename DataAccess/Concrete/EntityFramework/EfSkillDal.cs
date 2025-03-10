@@ -17,39 +17,58 @@ namespace DataAccess.Concrete.EntityFramework
         {
             using (PortfContext context = new PortfContext())
             {
-                var userSkills = context.Skills
-                                   .Where(s => s.UserId == userInfoAboutDto.UserId) // Kullanıcı ID'ye göre filtreleme
-                                   .ToList(); // Liste olarak getir
+                var existingSkills = context.Skills
+                    .Where(s => s.UserId == userInfoAboutDto.UserId)
+                    .ToList();
 
-
-                if (userSkills == null)
+                if (!existingSkills.Any())
                 {
                     return false;
                 }
 
-                // Mevcut yeteneklerin SkillId'lerini alıyoruz
-                var existingSkillIds = userSkills.Select(s => s.SkillId).ToHashSet();
+                var existingSkillIds = existingSkills.Select(s => s.SkillId).ToHashSet();
+                var incomingSkillIds = userInfoAboutDto.Skills.Select(s => s.SkillId).ToHashSet();
 
-                // Yeni gelen yeteneklerden sadece veritabanında olmayanları ekleyelim
+                context.Skills.RemoveRange(
+                    existingSkills.Where(s => !incomingSkillIds.Contains(s.SkillId))
+                );
+
+                foreach (var existingSkill in existingSkills)
+                {
+                    var updatedSkill = userInfoAboutDto.Skills
+                        .FirstOrDefault(s => s.SkillId == existingSkill.SkillId);
+
+                    if (updatedSkill != null)
+                    {
+                        existingSkill.Name = updatedSkill.Name;
+                        existingSkill.Proficiency = updatedSkill.Proficiency;
+                        context.Entry(existingSkill).State = EntityState.Modified;
+                    }
+                }
+
+              
                 var newSkills = userInfoAboutDto.Skills
-                    .Where(skill => !existingSkillIds.Contains(skill.SkillId)) // SkillId veritabanında yoksa ekle
+                    .Where(skill => !existingSkillIds.Contains(skill.SkillId))
                     .Select(skill => new Skill
                     {
                         UserId = userInfoAboutDto.UserId,
                         Name = skill.Name,
-                        Proficiency = skill.Proficiency,
+                        Proficiency = skill.Proficiency
                     })
                     .ToList();
 
-                if (newSkills.Any()) // Eğer eklenecek yeni yetenekler varsa
+                if (newSkills.Any())
                 {
                     context.Skills.AddRange(newSkills);
-                    context.SaveChanges();
                 }
+
+                context.SaveChanges();
 
                 return true;
             }
         }
+
+
 
     }
 }

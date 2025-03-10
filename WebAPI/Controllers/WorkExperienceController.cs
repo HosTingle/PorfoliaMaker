@@ -8,20 +8,20 @@ namespace WebAPI.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class CertificatesController :BaseController
+    public class WorkExperienceController : BaseController
     {
-        ICertificateService _certificateService;
+        IWorkExperienceService _workExperienceService;
 
-        public CertificatesController(ICertificateService certificateService)
+        public WorkExperienceController(IWorkExperienceService workExperienceService)
         {
-            _certificateService = certificateService;
+            _workExperienceService = workExperienceService;
         }
 
         [HttpGet("getAll")]
         public IActionResult GetAll()
         {
 
-            var result = _certificateService.GetAll();
+            var result = _workExperienceService.GetAll();
             if (result.Success)
             {
                 return Ok(result);
@@ -31,10 +31,10 @@ namespace WebAPI.Controllers
 
         }
         [HttpPost("add")]
-        public IActionResult Add(Certificate certificate)
+        public IActionResult Add(WorkExperience workExperience)
         {
 
-            var result = _certificateService.Add(certificate);
+            var result = _workExperienceService.Add(workExperience);
             if (result.Success)
             {
                 return Ok(result);
@@ -44,10 +44,10 @@ namespace WebAPI.Controllers
 
         }
         [HttpPost("delete")]
-        public IActionResult Delete(Certificate certificate)
+        public IActionResult Delete(WorkExperience workExperience)
         {
 
-            var result = _certificateService.Delete(certificate);
+            var result = _workExperienceService.Delete(workExperience);
             if (result.Success)
             {
                 return Ok(result);
@@ -57,10 +57,10 @@ namespace WebAPI.Controllers
 
         }
         [HttpPost("update")]
-        public IActionResult Update(Certificate certificate)
+        public IActionResult Update(WorkExperience workExperience)
         {
 
-            var result = _certificateService.Update(certificate);
+            var result = _workExperienceService.Update(workExperience);
             if (result.Success)
             {
                 return Ok(result);
@@ -69,12 +69,12 @@ namespace WebAPI.Controllers
 
 
         }
-        [HttpPost("updatecertificate")]
-        public IActionResult UpdateCertificate(CertificatesDto certificatesDto) 
+        [HttpPost("updateworkexperience")]
+        public IActionResult UpdateWorkExperience(WorkExperienceDto workExperienceDto) 
         {
             int userId = GetUserIdFromToken();
-            certificatesDto.UserId = userId;
-            var result = _certificateService.UpdateCertificate(certificatesDto);
+            workExperienceDto.UserId = userId;
+            var result = _workExperienceService.UpdateWorkExperience(workExperienceDto);
             if (result.Success)
             {
                 return Ok(result);
@@ -87,21 +87,8 @@ namespace WebAPI.Controllers
         public IActionResult getById(int id)
         {
 
-            var result = _certificateService.GetById(id);
+            var result = _workExperienceService.GetById(id);
             if (result.Success)
-            {
-                return Ok(result);
-            }
-            return BadRequest(result);
-
-
-        }
-        [HttpGet("getByUserId")]
-        public IActionResult getByUserId() 
-        {
-            int userId = GetUserIdFromToken();
-            var result = _certificateService.GetByUserId(userId);
-            if (result.Success) 
             {
                 return Ok(result);
             }

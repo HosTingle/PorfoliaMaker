@@ -19,12 +19,15 @@ namespace Business.Concrete
         private IUserService _userService;
         private ITokenHelper _tokenHelper;
         private IUserRoleService _userRoleService;  
+        private IUserInfoService _userInfoService;
 
-        public AuthManager(IUserService userService, ITokenHelper tokenHelper, IUserRoleService userRoleService)
+        public AuthManager(IUserService userService, ITokenHelper tokenHelper, 
+            IUserRoleService userRoleService,IUserInfoService userInfoService)
         {
             _userService = userService;
             _tokenHelper = tokenHelper;
             _userRoleService = userRoleService;
+            _userInfoService = userInfoService;
         }
 
         public IDataResult<User> Register(UserForRegisterDto userForRegisterDto, string password)

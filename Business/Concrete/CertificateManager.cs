@@ -1,7 +1,9 @@
 ﻿using Business.Abstract;
+using Business.Constants;
 using Core.Utilities.Results;
 using DataAccess.Abstract;
 using Entities.Concrete;
+using Entities.DTOs;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -41,10 +43,27 @@ namespace Business.Concrete
             return new SuccessDataResult<Certificate>(_certificatesDal.Get(c=>c.CertificateId==id));
         }
 
+        public IDataResult<List<Certificate>> GetByUserId(int id) 
+        {
+            return new SuccessDataResult<List<Certificate>>(_certificatesDal.GetAll(c=>c.UserId == id));
+        }
+
         public IResult Update(Certificate certificate)
         {
             _certificatesDal.Update(certificate);
             return new SuccessResult();
+        }
+
+        public IResult UpdateCertificate(CertificatesDto certificatesDto)
+        {
+            var result=_certificatesDal.UpdateCertificates(certificatesDto);
+            if (result)
+            {
+                return new SuccessResult(Messages.UpdateCertificate);
+            }
+            return new ErrorResult(Messages.UpdateCertificateError);
+
+
         }
     }
 }

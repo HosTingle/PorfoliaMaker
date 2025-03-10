@@ -26,6 +26,8 @@ namespace Business.Abstract
 
         IResult UpdateUserInfoPersonal(UserInfoPersonalDto userInfoPersonalDto);
 
-        IResult UpdateUserInfoAbout(UserInfoAboutDto userInfoAboutDto);
+        IDataResult<UserInfoAboutDto> UpdateUserInfoAbout(UserInfoAboutDto userInfoAboutDto);
+
+        IDataResult<UserInfo> GetByUserId(int id);
     }
 }

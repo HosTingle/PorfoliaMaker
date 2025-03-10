@@ -33,11 +33,31 @@ namespace Business.Constants
         public static string DeleteBlog = "Blog silindi";
         public static string DeleteBlogNot = "Blog silinemedi, sonra tekrar deneyin";
 
-        public static string UserInfoApplicantSucces = "Başvuru bilgileri güncellendi";
+        public static string UserInfoApplicantSuccess = "Başvuru bilgileri güncellendi";
 
         public static string UserInfoPersonalSucces = "Kişisel bilgileri güncellendi";
 
         public static string UserInfoAboutSucces = "Bilgiler güncellendi"; 
+
         public static string UserInfoAboutError = "Bilgiler güncellenirken hata oluştu";
+
+        public static string UpdateEducation = "Eğitim bilgileri güncellendi";
+
+        public static string UpdateErrorEducation= "Eğitim bilgileri güncellenirken hata oluştu";
+
+        public static string UpdateForeignError = "Yabancı diller güncellenirken hata oluştu";
+
+        public static string UpdateForeign = "Yabancı diller güncellendi";
+
+        public static string UpdateWorkExp = "İş deniyimi bilgileri güncellendi";
+
+        public static string UpdateWorkExpError = "İş deniyimi bilgileri güncellenirken hata oluştu";
+
+        public static string UpdateCertificateError = "Sertifikalar güncellenirken hata oluştu";
+
+        public static string UpdateCertificate = "Sertifika bilgileri güncellendi";
+
+        public static string UserInfoApplicantError = "Başvuru bilgileri güncellenirken hata oluştu";
     }
 }
+

@@ -1,5 +1,6 @@
 ﻿using Core.Utilities.Results;
 using Entities.Concrete;
+using Entities.DTOs;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -19,5 +20,9 @@ namespace Business.Abstract
         IResult Delete(Certificate certificate);
 
         IDataResult<Certificate> GetById(int id);
+
+        IDataResult<List<Certificate>> GetByUserId(int id);
+
+        IResult UpdateCertificate(CertificatesDto certificatesDto); 
     }
 }

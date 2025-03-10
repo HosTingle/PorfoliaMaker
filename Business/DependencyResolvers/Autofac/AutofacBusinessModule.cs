@@ -60,8 +60,17 @@ namespace Business.DependencyResolvers.Autofac
             builder.RegisterType<UserInfoManager>().As<IUserInfoService>().SingleInstance();
             builder.RegisterType<EfUserInfoDal>().As<IUserInfoDal>().SingleInstance();
 
+            builder.RegisterType<EducationManager>().As<IEducationService>().SingleInstance();
+            builder.RegisterType<EfEducationInfoDal>().As<IEducationInfoDal>().SingleInstance();
+
+            builder.RegisterType<WorkExperienceManager>().As<IWorkExperienceService>().SingleInstance();
+            builder.RegisterType<EfWorkExperienceDal>().As<IWorkExperienceDal>().SingleInstance();
+
             builder.RegisterType<UserRoleManager>().As<IUserRoleService>().SingleInstance();
             builder.RegisterType<EfUserRoleDal>().As<IUserRoleDal>().SingleInstance();
+
+            builder.RegisterType<ForeignLanguageManager>().As<IForeignLanguageService>().SingleInstance();
+            builder.RegisterType<EfForeignLanguageDal>().As<IForeignLanguageDal>().SingleInstance();
 
             builder.RegisterType<AuthManager>().As<IAuthService>();
             builder.RegisterType<JwtHelper>().As<ITokenHelper>();
