@@ -5,6 +5,7 @@ using Core.Entities.Concrete;
 using Core.Utilities.Results;
 using Core.Utilities.Security.Hashing;
 using Core.Utilities.Security.JWT;
+using Entities.Concrete;
 using Entities.DTOs;
 using System;
 using System.Collections.Generic;
@@ -20,35 +21,72 @@ namespace Business.Concrete
         private ITokenHelper _tokenHelper;
         private IUserRoleService _userRoleService;  
         private IUserInfoService _userInfoService;
+        private ISocialLinkService _socialLinkService;
 
         public AuthManager(IUserService userService, ITokenHelper tokenHelper, 
-            IUserRoleService userRoleService,IUserInfoService userInfoService)
+            IUserRoleService userRoleService,IUserInfoService userInfoService,ISocialLinkService socialLinkService)
         {
             _userService = userService;
             _tokenHelper = tokenHelper;
             _userRoleService = userRoleService;
             _userInfoService = userInfoService;
+            _socialLinkService=socialLinkService;
         }
 
         public IDataResult<User> Register(UserForRegisterDto userForRegisterDto, string password)
         {
             byte[] passwordHash, passwordSalt;
             HashingHelper.CreatePasswordHash(password, out passwordHash, out passwordSalt);
-            var user = new User
+  
+
+            var userInfo = new UserInfo();
+            userInfo.FullName=userForRegisterDto.FullName;
+            userInfo.NickName=userForRegisterDto.NickName;
+
+            var result=_userInfoService.Add(userInfo);
+
+            if (result.Success)
             {
-                Email = userForRegisterDto.Email,
-                NickName=userForRegisterDto.NickName,
-                PasswordHash = passwordHash,
-                PasswordSalt = passwordSalt,
-                CreatedAt = DateTime.UtcNow,
-                ProfilePhoto= "https://i.pinimg.com/736x/09/21/fc/0921fc87aa989330b8d403014bf4f340.jpg",
-                Status = true,
-                UserInfoId=1
-            };
-            _userService.Add(user);
-            return new SuccessDataResult<User>(user, Messages.UserRegistered);
+                var user = new User
+                {
+                    Email = userForRegisterDto.Email,
+             
+                    PasswordHash = passwordHash,
+                    PasswordSalt = passwordSalt,
+                    CreatedAt = DateTime.UtcNow,
+                    ProfilePhoto = "https://i.pinimg.com/736x/09/21/fc/0921fc87aa989330b8d403014bf4f340.jpg",
+                    Status = true,
+                    UserInfoId = result.Data.UserInfoId,
+                };
+
+                var number = _userService.Add(user).Data;
+                IResult soci = AddSocial(number);
+                if (soci.Success)
+                {
+                    return new SuccessDataResult<User>(user, Messages.UserRegistered);
+                }
+
+            }
+            return new ErrorDataResult<User>( Messages.UserRegisteredError); 
         }
 
+        private IResult AddSocial(int number)
+        {
+            var socialLinks = new List<SocialLink>{
+    new SocialLink { SocialLinkId = 0, UserId =number, Platform = "Github", Url = null },
+    new SocialLink { SocialLinkId = 0, UserId = number, Platform = "Website", Url = null },
+    new SocialLink { SocialLinkId = 0, UserId = number, Platform = "LinkedIn", Url = null }
+                };
+            var socialLinkDto = new socialLinkDto()
+            {
+                socialLinks = socialLinks,
+                UserId = number,
+            };
+
+
+            var soci = _socialLinkService.UpdateSocialLink(socialLinkDto);
+            return soci;
+        }
 
         public IDataResult<User> Login(UserForLoginDto userForLoginDto)
         {

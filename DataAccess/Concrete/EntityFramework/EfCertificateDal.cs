@@ -21,10 +21,7 @@ namespace DataAccess.Concrete.EntityFramework
                     .Where(s => s.UserId == certificatesDto.UserId)
                     .ToList();
 
-                if (!existingCertificates.Any())
-                {
-                    return false;
-                }
+        
 
                 var existingCertificateIds = existingCertificates.Select(s => s.CertificateId).ToHashSet();
                 var incomingCertificateIds = certificatesDto.Certificates.Select(s => s.CertificateId).ToHashSet();
@@ -50,7 +47,7 @@ namespace DataAccess.Concrete.EntityFramework
                     }
                 }
 
-                // Yeni kayıt ekleme işlemi (mevcut listede olmayan yeni sertifikaları ekle)
+               
                 var newCertificates = certificatesDto.Certificates
                     .Where(certificate => !existingCertificateIds.Contains(certificate.CertificateId))
                     .Select(certificate => new Certificate

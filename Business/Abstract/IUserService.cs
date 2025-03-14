@@ -19,7 +19,7 @@ namespace Business.Abstract
 
         IDataResult<List<UsersDetailDto>> GetUsersDetails();
 
-        IResult Add(User user);
+        IDataResult<int> Add(User user);
 
         IDataResult<UserById> GetById(int id);
         List<Role> GetClaims(User user);
@@ -29,5 +29,7 @@ namespace Business.Abstract
         IDataResult<List<User>>? GetByProject(int getbyproject);
 
         IDataResult<UserAllInfoDto>? GetUserAllInfo(int id);
+
+        IDataResult<UserAllInfoDto>? GetUserAllInfoByUserName(string name);
     } 
 }

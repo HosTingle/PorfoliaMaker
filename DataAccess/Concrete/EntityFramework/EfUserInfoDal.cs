@@ -4,6 +4,7 @@ using Core.Utilities.Results;
 using DataAccess.Abstract;
 using Entities.Concrete;
 using Entities.DTOs;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -14,7 +15,16 @@ namespace DataAccess.Concrete.EntityFramework
 {
     public class EfUserInfoDal : EfEntityRepositoryBase<UserInfo, PortfContext>, IUserInfoDal  
     {
-
+        public UserInfo AddGetInfo(UserInfo userInfo) 
+        {
+            using (PortfContext context = new PortfContext())
+            {
+                context.UserInfo.Add(userInfo);
+                context.SaveChanges(); 
+                return userInfo;
+            }
+  
+        }
         public bool UpdateUserInfoApplication(UserInfoApplicantDto userInfoApplicantDto)
         {
             using (PortfContext context = new PortfContext())
@@ -67,7 +77,8 @@ namespace DataAccess.Concrete.EntityFramework
                 {
                     return false;
                 }
-
+                userInfo.Profession=userInfoAboutDto.Profession;
+                userInfo.FullName=userInfoAboutDto.FullName;
                 userInfo.SalaryException = userInfoAboutDto.SalaryException;
                 userInfo.Bio = userInfoAboutDto.Bio;
                 context.SaveChanges();
@@ -75,5 +86,33 @@ namespace DataAccess.Concrete.EntityFramework
             }
 
         }
+        public List<UserSearchResultDto> SearchByNickname(string nickname)
+        {
+            using (PortfContext context = new PortfContext())
+            {
+                if (string.IsNullOrEmpty(nickname) || nickname.Length < 2)
+                {
+                    return new List<UserSearchResultDto>();
+                }
+
+                var results = context.UserInfo
+                    .Where(ui => ui.NickName != null && ui.NickName.ToLower().Contains(nickname.ToLower()))
+                    .Join(context.Users, // Join işlemi yap
+                        ui => ui.UserInfoId, // UserInfoId üzerinden eşleşme yap
+                        u => u.UserInfoId,
+                        (ui, u) => new UserSearchResultDto
+                        {
+                            UserInfoId = ui.UserInfoId,
+                            NickName = ui.NickName,
+                            UserId = u.UserId
+                        })
+                    .Take(10)
+                    .ToList();
+
+                return results;
+            }
+        }
+
+
     }
 }

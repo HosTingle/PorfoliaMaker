@@ -20,6 +20,7 @@ namespace Entities.DTOs
 
         public string Website {  get; set; }
 
+        public string Email { get; set; } 
         public string ProfilePhoto {  get; set; }
 
         public List<Skill> Skills { get; set; }

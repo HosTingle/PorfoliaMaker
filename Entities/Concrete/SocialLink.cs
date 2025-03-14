@@ -13,10 +13,10 @@ namespace Entities.Concrete
         [Key] 
         public int SocialLinkId { get; set; } 
 
-        public int UserId { get; set; }
+        public int? UserId { get; set; }
 
-        public string Platform {  get; set; } 
+        public string? Platform {  get; set; } 
 
-        public string Url { get; set; }
+        public string? Url { get; set; }
     }
 }

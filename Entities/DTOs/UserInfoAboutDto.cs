@@ -18,6 +18,10 @@ namespace Entities.DTOs
 
         public string? Bio { get; set; } 
 
+        public string? Profession {  get; set; }
+
+        public string? FullName {  get; set; }
+
         public List<Skill>? Skills { get; set; } 
     }
 }

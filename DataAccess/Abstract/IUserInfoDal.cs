@@ -18,5 +18,9 @@ namespace DataAccess.Abstract
         bool UpdateUserInfoPersonal(UserInfoPersonalDto userInfoPersonalDto);
 
         bool UpdateUserInfoAbout(UserInfoAboutDto userInfoAboutDto);
+
+        UserInfo AddGetInfo(UserInfo userInfo);
+
+        List<UserSearchResultDto> SearchByNickname(string nickname);
     }
 }

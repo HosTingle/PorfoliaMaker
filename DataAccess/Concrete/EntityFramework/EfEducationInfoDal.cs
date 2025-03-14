@@ -21,10 +21,7 @@ namespace DataAccess.Concrete.EntityFramework
                     .Where(s => s.UserId == educationInfoDto.UserId)
                     .ToList();
 
-                if (!existingEducationInfo.Any())
-                {
-                    return false;
-                }
+    
 
                 var existingEducationInfoIds = existingEducationInfo.Select(s => s.EducationInfoId).ToHashSet();
                 var incomingEducationInfoIds = educationInfoDto.EducationInfos.Select(s => s.EducationInfoId).ToHashSet();

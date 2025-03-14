@@ -23,6 +23,8 @@ namespace Entities.Concrete
          
         public string? Gender {  get; set; }
 
+        public string? NickName { get; set; }
+
         public string? MilitaryServiceInfo { get; set; }
 
         public string? Birthplace {  get; set; }
@@ -33,8 +35,10 @@ namespace Entities.Concrete
 
         public string? SalaryException {  get; set; }
 
-        public string Bio { get; set; }
+        public string? Bio { get; set; }
 
-        public string FullName { get; set; }
+        public string? FullName { get; set; }
+
+        public string? Profession { get; set; }
     }
 }

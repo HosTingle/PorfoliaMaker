@@ -21,6 +21,6 @@ namespace Entities.DTOs
 
         public bool Status { get; set; }
 
-        public int UserInfoId {  get; set; }
+        public int? UserInfoId {  get; set; }
     }
 }

@@ -27,10 +27,10 @@ namespace Business.Concrete
             _skillDal = skillDal;
         }
 
-        public IResult Add(UserInfo userInfo) 
+        public IDataResult<UserInfo> Add(UserInfo userInfo) 
         {
-            _userInfoDal.Add(userInfo);
-            return new SuccessResult();
+            var result=_userInfoDal.AddGetInfo(userInfo);
+            return new SuccessDataResult<UserInfo>(result);
         }
 
         public IResult Delete(UserInfo userInfo)
@@ -88,6 +88,11 @@ namespace Business.Concrete
                 return new SuccessDataResult<UserInfoAboutDto>( userInfoAboutDto,Messages.UserInfoAboutSucces);
             }
             return new ErrorDataResult<UserInfoAboutDto>(Messages.UserInfoAboutError);  
+        }
+
+        public IDataResult<List<UserSearchResultDto>> SearchByNickname(string nickname)
+        {
+            return new SuccessDataResult<List<UserSearchResultDto>>(_userInfoDal.SearchByNickname(nickname), Messages.UserInfoAboutSucces);
         }
     }
 }

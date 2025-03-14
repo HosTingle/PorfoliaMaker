@@ -1,5 +1,6 @@
 ﻿using Business.Abstract;
 using Entities.Concrete;
+using Entities.DTOs;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
@@ -7,7 +8,7 @@ namespace WebAPI.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class SocialLinksController : ControllerBase
+    public class SocialLinksController : BaseController
     {
         ISocialLinkService _socialLinkService;
 
@@ -60,6 +61,20 @@ namespace WebAPI.Controllers
         {
 
             var result = _socialLinkService.Update(socialLink);
+            if (result.Success)
+            {
+                return Ok(result);
+            }
+            return BadRequest(result);
+
+
+        }
+        [HttpPost("updatesociallink")]
+        public IActionResult UpdateSocialLink(socialLinkDto socialLinkDto) 
+        {
+            int userId = GetUserIdFromToken();
+            socialLinkDto.UserId = userId;
+            var result = _socialLinkService.UpdateSocialLink(socialLinkDto);
             if (result.Success)
             {
                 return Ok(result);

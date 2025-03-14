@@ -27,24 +27,26 @@ namespace Business.Concrete
     {
  
         IUserDal _usersDal;
+        IUserInfoDal _userInfoDal; 
    
-        public UserManager(IUserDal usersDal)
+        public UserManager(IUserDal usersDal, IUserInfoDal userInfoDal)
         {
             _usersDal = usersDal;
+            _userInfoDal = userInfoDal;
         }
 
 
         [ValidationAspect(typeof(UserValidator))]
-        public IResult Add(User user)
+        public IDataResult<int> Add(User user)
         {
             IResult result=BusinessRules.Run(EmailKontrol(user), KisiSinirla());
 
             if (result != null)
             {
-                return result;
+                return new ErrorDataResult<int>(Messages.UserAdded);
             }
-            _usersDal.Add(user);
-            return new SuccessResult(Messages.UserAdded);
+            var number=_usersDal.AddGetId(user).UserId; 
+            return new SuccessDataResult<int>(number,Messages.UserAdded);
         }
 
 
@@ -81,8 +83,8 @@ namespace Business.Concrete
         }
         private IResult KisiSinirla()
         {
-            var result = GetAll();
-            if (result.Data.Count > 15)
+            var result = _usersDal.GetAll();
+            if (result.Count > 15)
             {
                 return new ErrorResult(Messages.MessageFAS);
             }
@@ -122,6 +124,11 @@ namespace Business.Concrete
         public IDataResult<UserAllInfoDto>? GetUserAllInfo(int id) 
         {
             return new SuccessDataResult<UserAllInfoDto>(_usersDal.GetUsersAllInfo(id));
+        }
+        public IDataResult<UserAllInfoDto>? GetUserAllInfoByUserName(string name) 
+        {
+            var result = _userInfoDal.SearchByNickname(name);
+            return new SuccessDataResult<UserAllInfoDto>(_usersDal.GetUsersAllInfo(result[0].UserId));
         }
     }
 }

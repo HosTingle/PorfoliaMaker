@@ -22,10 +22,6 @@ namespace DataAccess.Concrete.EntityFramework
                     .Where(s => s.UserId == workExperienceDto.UserId)
                     .ToList();
 
-                if (!existingWorkExperiences.Any())
-                {
-                    return false;
-                }
 
                 var existingWorkExperienceIds = existingWorkExperiences.Select(s => s.WorkExperienceId).ToHashSet();
                 var incomingExperienceIds = workExperienceDto.WorkExperience.Select(s => s.WorkExperienceId).ToHashSet();

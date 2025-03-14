@@ -44,6 +44,31 @@ namespace WebAPI.Controllers
 
 
         }
+        [HttpGet("getAllInfoByName")]
+        public IActionResult GetAllInfoName(string name) 
+        {
+ 
+            var result = _usersService.GetUserAllInfoByUserName(name);
+            if (result.Success)
+            {
+                return Ok(result);
+            }
+            return BadRequest(result);
+
+
+        }
+        [HttpGet("getAllInfoOther")]
+        public IActionResult GetAllInfoOther(int id) 
+        {
+            var result = _usersService.GetUserAllInfo(id);
+            if (result.Success)
+            {
+                return Ok(result);
+            }
+            return BadRequest(result);
+
+
+        }
         [HttpPost]
         public IActionResult Post(User users)
         {
@@ -79,6 +104,7 @@ namespace WebAPI.Controllers
             return BadRequest(result);
         
         }
+
 
     }
 }

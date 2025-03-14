@@ -134,6 +134,16 @@ namespace WebAPI.Controllers
             return BadRequest(result);
 
         }
-      
+        [HttpGet("SearchByNickname")]
+        public IActionResult SearchByNickname(string nickName)  
+        {
+            var result = _userInfoService.SearchByNickname(nickName);
+            if (result.Success)
+            {
+                return Ok(result);
+            }
+            return BadRequest(result);
+
+        }
     }
 }

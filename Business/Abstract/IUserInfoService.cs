@@ -12,9 +12,9 @@ namespace Business.Abstract
 {
     public interface IUserInfoService
     {
-        IDataResult<List<UserInfo>> GetAll(); 
+        IDataResult<List<UserInfo>> GetAll();
 
-        IResult Add(UserInfo userInfo); 
+        IDataResult<UserInfo> Add(UserInfo userInfo);
 
         IResult Update(UserInfo userInfo);
 
@@ -29,5 +29,7 @@ namespace Business.Abstract
         IDataResult<UserInfoAboutDto> UpdateUserInfoAbout(UserInfoAboutDto userInfoAboutDto);
 
         IDataResult<UserInfo> GetByUserId(int id);
+
+        IDataResult<List<UserSearchResultDto>> SearchByNickname(string nickname);
     }
 }

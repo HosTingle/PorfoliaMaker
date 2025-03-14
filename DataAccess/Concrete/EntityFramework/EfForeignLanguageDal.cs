@@ -21,11 +21,7 @@ namespace DataAccess.Concrete.EntityFramework
                     .Where(s => s.UserId == foreignLanguageDto.UserId)
                     .ToList();
 
-                if (!existingForeignLanguages.Any()) 
-                {
-                    return false;
-                }
-
+       
                 var existingForeignLanguageIds = existingForeignLanguages.Select(s => s.ForeignLanguageId).ToHashSet();
                 var incomingForeignLanguageIds = foreignLanguageDto.ForeignLanguages.Select(s => s.ForeignLanguageId).ToHashSet();
 

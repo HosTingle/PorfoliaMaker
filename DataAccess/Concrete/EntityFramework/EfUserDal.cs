@@ -28,6 +28,16 @@ namespace DataAccess.Concrete.EntityFramework
 
             }
         }
+        public User AddGetId(User user) 
+        {
+            using (PortfContext context = new PortfContext())
+            {
+                context.Users.Add(user);
+                context.SaveChanges();
+                return user;
+            }
+
+        }
         public List<UsersDetailDto> GetUsersDetails()
         {
             using (PortfContext context = new PortfContext())
@@ -39,7 +49,6 @@ namespace DataAccess.Concrete.EntityFramework
                              {
                                  UserId = p.UserId,
                                  CreatedAt = u.CreatedAt,
-                                 NickName=u.NickName,
                                  Email = u.Email,
                                  PasswordHash = u.PasswordHash,
                                  PasswordSalt = u.PasswordSalt,
@@ -56,14 +65,13 @@ namespace DataAccess.Concrete.EntityFramework
             }
 
         }
-     public UserAllInfoDto GetUsersAllInfo(int userId)
-{
-    using (PortfContext context = new PortfContext())
-    {
-        var user = context.Users.Where(u => u.UserId == userId)
+        public UserAllInfoDto GetUsersAllInfo(int userId)
+        {
+            using (PortfContext context = new PortfContext())
+            {
+                 var user = context.Users.Where(u => u.UserId == userId)
                                  .Select(u => new UserAllInfoDto
                                  {
-                                     NickName = u.NickName,
                                      ProfilePhoto = u.ProfilePhoto,
                                      Skills = context.Skills.Where(s => s.UserId == u.UserId).ToList(),
                                      Certificates = context.Certificates.Where(c => c.UserId == u.UserId).ToList(),
@@ -71,10 +79,8 @@ namespace DataAccess.Concrete.EntityFramework
                                                         .Where(p => p.UserId == u.UserId)
                                                         .Select(p => new ProjectDto
                                                         {
-                                       
                                                             Title = p.Title,
                                                             CreatedAt=p.CreatedAt,
-                     
                                                             Description = p.Description,
                                                             PhotosUrls = context.ProjectPhotos
                                                                             .Where(pp => pp.ProjectId == p.ProjectId)
@@ -83,8 +89,6 @@ namespace DataAccess.Concrete.EntityFramework
                                                                                 ProjectPhotoUrl=pp.ProjectPhotoUrl,
                                                                                 ProjectId=pp.ProjectId,
                                                                                 ProjectPhotoId = pp.ProjectPhotoId,
-                                                                                
-                                                                   
                                                                             })
                                                                             .ToList()
                                                         })
@@ -100,20 +104,21 @@ namespace DataAccess.Concrete.EntityFramework
                                      })
                                                         .ToList(),
                                      Comments = context.Comments.Where(co => co.UserId == u.UserId).ToList(),
-                                     EducationInfo=context.EducationInfo.Where(ed=>ed.UserId==u.UserId).ToList(),
+                                     SocialLinks= context.SocialLinks.Where(s => s.UserId == u.UserId).ToList(),
+                                     EducationInfo =context.EducationInfo.Where(ed=>ed.UserId==u.UserId).ToList(),
                                      ForeignLanguage=context.ForeignLanguage.Where(fo=>fo.UserId==u.UserId).ToList(),
                                      WorkExperiences = context.WorkExperience.Where(we => we.UserId == u.UserId).ToList(),
-                                     Github = context.SocialLinks.Where(sl => sl.UserId == u.UserId && sl.Platform.ToLower() == "github").Select(sl => sl.Url).FirstOrDefault() ?? "No GitHub",
-                                     LinkedIn = context.SocialLinks.Where(sl => sl.UserId == u.UserId && sl.Platform.ToLower() == "linkedin").Select(sl => sl.Url).FirstOrDefault() ?? "No LinkedIn",
-                                     Website = context.SocialLinks.Where(sl => sl.UserId == u.UserId && sl.Platform.ToLower() == "website").Select(sl => sl.Url).FirstOrDefault() ?? "No Website",
-                                     UserInfos = context.UserInfo.Where(ui => ui.UserInfoId == context.Users.Where(us => us.UserId == u.UserId).Select(us => us.UserInfoId).FirstOrDefault()).FirstOrDefault()
+                                     Github = context.SocialLinks.Where(sl => sl.UserId == u.UserId && sl.Platform!.ToLower() == "github").Select(sl => sl.Url).FirstOrDefault()!,
+                                     LinkedIn = context.SocialLinks.Where(sl => sl.UserId == u.UserId && sl.Platform!.ToLower() == "linkedin").Select(sl => sl.Url).FirstOrDefault()! ,
+                                     Website = context.SocialLinks.Where(sl => sl.UserId == u.UserId && sl.Platform!.ToLower() == "website").Select(sl => sl.Url).FirstOrDefault()! ,
+                                     UserInfos = context.UserInfo.Where(ui => ui.UserInfoId == context.Users.Where(us => us.UserId == u.UserId).Select(us => us.UserInfoId).FirstOrDefault()).FirstOrDefault()!,
+                                     Email = context.Users.Where(us => us.UserId == u.UserId).Select(us => us.Email).FirstOrDefault()!
                                  })
                                  .AsEnumerable()
                                  .FirstOrDefault();
-
-        return user ?? null;
-    }
-}
+                                 return user ?? null!;
+             }
+        }
 
 
         public UserById GetUserById(int id)
@@ -127,7 +132,6 @@ namespace DataAccess.Concrete.EntityFramework
                                  UserId = u.UserId,
                  
                                  CreatedAt = u.CreatedAt,
-                                 NickName = u.NickName,
                                  Email = u.Email,
              
                                  ProfilePhoto = u.ProfilePhoto,
@@ -142,7 +146,7 @@ namespace DataAccess.Concrete.EntityFramework
         {
             using (PortfContext context = new PortfContext())
             {
-                return context.Users
+                return (int)context.Users
                     .Where(u => u.UserId == id)
                     .Select(u => u.UserInfoId)
                     .FirstOrDefault();

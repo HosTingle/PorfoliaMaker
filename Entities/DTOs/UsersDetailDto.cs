@@ -29,6 +29,6 @@ namespace Entities.DTOs
         public string Title { get; set; }
         public bool Status {  get; set; }
 
-        public int UserInfoId { get; set; }
+        public int? UserInfoId { get; set; }
     }
 }

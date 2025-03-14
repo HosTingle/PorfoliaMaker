@@ -17,6 +17,7 @@ namespace Business.Constants
         public static string MessageFAS = "Kişi eklenme sayısı dolu";
         public static string AuthorizationDenied="Yetkiniz yok";
         public static string UserRegistered="Kayıt başarılı, Giriş Yapın";
+        public static string UserRegisteredError = "Kayıt olurken hata oluştu, daha sonra tekrar deneyiniz.";
         public static string UserNotFound="Bilgiler Yanlış Girildi,Tekrar Deneyiniz";
         public static string PasswordError="Bilgiler Yanlış Girildi,Tekrar Deneyiniz";
         public static string SuccessfulLogin="Giriş Başarılı";
@@ -58,6 +59,8 @@ namespace Business.Constants
         public static string UpdateCertificate = "Sertifika bilgileri güncellendi";
 
         public static string UserInfoApplicantError = "Başvuru bilgileri güncellenirken hata oluştu";
+
+        public static string UpdateSocialLinks = "Linkler güncellendi";
     }
 }
 

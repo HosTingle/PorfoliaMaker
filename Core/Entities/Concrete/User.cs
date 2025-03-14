@@ -15,8 +15,6 @@ namespace Core.Entities.Concrete
         [Key]
         public int UserId { get; set; }
 
-        public string NickName { get; set; }
-
         public string Email { get; set; }
 
         public byte[] PasswordSalt { get; set; }
@@ -29,7 +27,7 @@ namespace Core.Entities.Concrete
 
         public bool Status { get; set; }
 
-        public int UserInfoId { get; set; }
+        public int? UserInfoId { get; set; }
 
     }
 }

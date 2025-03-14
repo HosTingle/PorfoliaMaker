@@ -21,5 +21,7 @@ namespace DataAccess.Abstract
 
         int GetUserInfoIdByUserId(int id);
 
+        User AddGetId(User user);
+
     }
 }
