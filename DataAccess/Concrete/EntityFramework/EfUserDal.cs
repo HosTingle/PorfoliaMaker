@@ -79,6 +79,7 @@ namespace DataAccess.Concrete.EntityFramework
                                                         .Where(p => p.UserId == u.UserId)
                                                         .Select(p => new ProjectDto
                                                         {
+                                                            ProjectId = p.ProjectId,
                                                             Title = p.Title,
                                                             CreatedAt=p.CreatedAt,
                                                             Description = p.Description,

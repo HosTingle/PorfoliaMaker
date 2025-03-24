@@ -21,10 +21,7 @@ namespace DataAccess.Concrete.EntityFramework
                     .Where(s => s.UserId == userInfoAboutDto.UserId)
                     .ToList();
 
-                if (!existingSkills.Any())
-                {
-                    return false;
-                }
+       
 
                 var existingSkillIds = existingSkills.Select(s => s.SkillId).ToHashSet();
                 var incomingSkillIds = userInfoAboutDto.Skills.Select(s => s.SkillId).ToHashSet();

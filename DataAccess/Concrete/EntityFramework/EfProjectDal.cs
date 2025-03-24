@@ -19,7 +19,7 @@ namespace DataAccess.Concrete.EntityFramework
                 var result = from u in context.Projects
                              join p in context.ProjectPhotos
                              on u.ProjectId equals p.ProjectId
-                             where u.UserId == userId // Kullanıcı ID'sine göre filtreleme
+                             where u.UserId == userId 
                              select new ProjectWithPhotoDto
                              {
                                  ProjectId = u.ProjectId,
@@ -39,13 +39,11 @@ namespace DataAccess.Concrete.EntityFramework
             using (PortfContext context = new PortfContext())
             {
                 return context.Projects
-                    .Where(p => p.UserId == userId) // Kullanıcı ID'sine göre filtreleme
+                    .Where(p => p.UserId == userId) 
                     .Select(p => new ProjectDto
                     {
-
                         Title = p.Title,
                         CreatedAt = p.CreatedAt,
-
                         Description = p.Description,
                         ProjectUrl = p.ProjectUrl,
                         PhotosUrls = context.ProjectPhotos
