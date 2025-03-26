@@ -61,6 +61,8 @@ namespace Business.Constants
         public static string UserInfoApplicantError = "Başvuru bilgileri güncellenirken hata oluştu";
 
         public static string UpdateSocialLinks = "Linkler güncellendi";
+
+        public static string UnAuthorizedAccess = "Yetkisiz İstek";
     }
 }
 

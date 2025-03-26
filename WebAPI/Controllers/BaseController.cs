@@ -16,5 +16,9 @@ namespace WebAPI.Controllers
             }
             return 0;
         }
+        protected int IsUser() 
+        {
+        
+        }
     }
 }

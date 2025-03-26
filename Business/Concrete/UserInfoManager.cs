@@ -94,5 +94,10 @@ namespace Business.Concrete
         {
             return new SuccessDataResult<List<UserSearchResultDto>>(_userInfoDal.SearchByNickname(nickname), Messages.UserInfoAboutSucces);
         }
+
+        public IDataResult<int?> GetUserIdByDetails(int userInfoId)
+        {
+            return new SuccessDataResult<int?>(_userInfoDal.GetUserIdByDetails(userInfoId));
+        }
     }
 }

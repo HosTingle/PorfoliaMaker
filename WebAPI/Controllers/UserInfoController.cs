@@ -1,4 +1,7 @@
 ﻿using Business.Abstract;
+using Business.Constants;
+using Castle.Components.DictionaryAdapter.Xml;
+using Core.Utilities.Results;
 using Entities.Concrete;
 using Entities.DTOs;
 using Microsoft.AspNetCore.Http;
@@ -98,15 +101,19 @@ namespace WebAPI.Controllers
         public IActionResult UpadateUserInfoApplicant(UserInfoApplicantDto userInfoApplicantDto)
         {
             int userId = GetUserIdFromToken();
-            userInfoApplicantDto.UserId = userId;
-            var result = _userInfoService.UpdateUserInfoApplication(userInfoApplicantDto);
-            if (result.Success)
+            var id = _userInfoService.GetUserIdByDetails(userInfoApplicantDto.UserInfoId);
+            if (id.Data == userId)
             {
-                return Ok(result);
+                userInfoApplicantDto.UserId = userId;
+
+                var result = _userInfoService.UpdateUserInfoApplication(userInfoApplicantDto);
+                if (result.Success)
+                {
+                    return Ok(result);
+                }
+                return BadRequest(result);
             }
-            return BadRequest(result);
-
-
+            return BadRequest(new ErrorResult(Messages.UnAuthorizedAccess));
         }
         [HttpPost("UpdateUserInfoPersonal")]
         public IActionResult UpdateUserInfoPersonal(UserInfoPersonalDto userInfoPersonalDto)

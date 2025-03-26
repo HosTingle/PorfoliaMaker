@@ -31,5 +31,7 @@ namespace Business.Abstract
         IDataResult<UserInfo> GetByUserId(int id);
 
         IDataResult<List<UserSearchResultDto>> SearchByNickname(string nickname);
+
+        IDataResult<int?> GetUserIdByDetails(int userInfoId);
     }
 }

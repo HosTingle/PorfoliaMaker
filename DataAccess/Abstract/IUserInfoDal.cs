@@ -22,5 +22,7 @@ namespace DataAccess.Abstract
         UserInfo AddGetInfo(UserInfo userInfo);
 
         List<UserSearchResultDto> SearchByNickname(string nickname);
+
+        int? GetUserIdByDetails(int userinfoId);
     }
 }
