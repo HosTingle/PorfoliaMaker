@@ -1,5 +1,6 @@
 ﻿using Business.Abstract;
 using Business.Constants;
+using Core.Entities.Concrete;
 using Core.Utilities.Results;
 using DataAccess.Abstract;
 using DataAccess.Concrete.EntityFramework;
@@ -55,6 +56,7 @@ namespace Business.Concrete
 
         public IResult UpdateEducation(EducationInfoDto educationInfoDto)
         {
+
             var result=_educationInfoDal.UpdateEducation(educationInfoDto);
             if (result) 
             {

@@ -13,5 +13,8 @@ namespace DataAccess.Abstract
     {
 
         bool UpdateEducation(EducationInfoDto educationInfoDto);
+
+
+        int? GetUserIdByDetails(int educationInfoId);
     }
 }

@@ -41,7 +41,6 @@ namespace Business.Concrete
 
             var userInfo = new UserInfo();
             userInfo.FullName=userForRegisterDto.FullName;
-            userInfo.NickName=userForRegisterDto.NickName;
 
             var result=_userInfoService.Add(userInfo);
 
@@ -50,7 +49,7 @@ namespace Business.Concrete
                 var user = new User
                 {
                     Email = userForRegisterDto.Email,
-             
+                    Username=userForRegisterDto.NickName,
                     PasswordHash = passwordHash,
                     PasswordSalt = passwordSalt,
                     CreatedAt = DateTime.UtcNow,

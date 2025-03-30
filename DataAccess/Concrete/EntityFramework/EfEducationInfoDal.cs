@@ -76,5 +76,18 @@ namespace DataAccess.Concrete.EntityFramework
                 return true;
             }
         }
+        public int? GetUserIdByDetails(int educationInfoId) 
+        {
+            using (PortfContext context = new PortfContext())
+            {
+                var userId = context.EducationInfo
+                    .Where(u => u.EducationInfoId == educationInfoId)
+                    .Select(u => u.UserId)
+                    .FirstOrDefault();
+
+                return userId == 0 ? null : userId;
+            }
+        }
+
     }
 }

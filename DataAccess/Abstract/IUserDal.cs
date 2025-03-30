@@ -23,5 +23,7 @@ namespace DataAccess.Abstract
 
         User AddGetId(User user);
 
+        bool UpdateUser(int id, string newProfilePhotoUrl);
+
     }
 }

@@ -22,6 +22,8 @@ namespace Entities.DTOs
 
         public string? FullName {  get; set; }
 
-        public List<Skill>? Skills { get; set; } 
+        public List<Skill>? Skills { get; set; }
+
+        public string? PhotoUrl { get; set; }
     }
 }

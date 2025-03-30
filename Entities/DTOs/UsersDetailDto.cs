@@ -14,7 +14,7 @@ namespace Entities.DTOs
         [Key]
         public int UserId { get; set; }
 
-        public string NickName { get; set; }
+        public string Username { get; set; } 
         public string Email { get; set; }
 
         public byte[] PasswordSalt { get; set; }

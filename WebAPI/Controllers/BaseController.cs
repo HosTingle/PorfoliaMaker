@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using System.Security.Claims;
 
 namespace WebAPI.Controllers
 {
@@ -9,16 +10,12 @@ namespace WebAPI.Controllers
     {
         protected int GetUserIdFromToken()
         {
-            var userIdString = User.FindFirst("http://schemas.xmlsoap.org/ws/2005/05/identity/claims/nameidentifier")?.Value;
+            var userIdString = User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
             if (int.TryParse(userIdString, out int userId))
             {
                 return userId;
             }
             return 0;
-        }
-        protected int IsUser() 
-        {
-        
         }
     }
 }

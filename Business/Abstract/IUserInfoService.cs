@@ -22,11 +22,11 @@ namespace Business.Abstract
 
         IDataResult<UserInfo> GetById(int id);
 
-        IResult UpdateUserInfoApplication(UserInfoApplicantDto userInfoApplicantDto);
+        IResult UpdateUserInfoApplicant(int userId, UserInfoApplicantDto userInfoApplicantDto);
 
-        IResult UpdateUserInfoPersonal(UserInfoPersonalDto userInfoPersonalDto);
+        IResult UpdateUserInfoPersonal(int userId, UserInfoPersonalDto userInfoPersonalDto);
 
-        IDataResult<UserInfoAboutDto> UpdateUserInfoAbout(UserInfoAboutDto userInfoAboutDto);
+        IDataResult<UserInfoAboutDto> UpdateUserInfoAbout(int userId, UserInfoAboutDto userInfoAboutDto);
 
         IDataResult<UserInfo> GetByUserId(int id);
 

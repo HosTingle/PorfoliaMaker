@@ -21,7 +21,9 @@ namespace Core.Entities.Concrete
 
         public byte[] PasswordHash { get; set; }
 
-        public string ProfilePhoto { get; set; }
+        public string? ProfilePhoto { get; set; }
+
+        public string Username { get; set; } 
 
         public DateTime CreatedAt { get; set; }
 

@@ -11,6 +11,7 @@ using Core.DataAccess.EntityFramework;
 using Entities.DTOs;
 using Core.Entities.Concrete;
 using Entities.Concrete;
+using Core.Utilities.Results;
 namespace DataAccess.Concrete.EntityFramework
 {
     public class EfUserDal : EfEntityRepositoryBase<User, PortfContext>, IUserDal
@@ -53,6 +54,7 @@ namespace DataAccess.Concrete.EntityFramework
                                  PasswordHash = u.PasswordHash,
                                  PasswordSalt = u.PasswordSalt,
                                  ProfilePhoto = u.ProfilePhoto,
+                                 Username=u.Username,
                                  Title = p.Title,
                                  Status=u.Status,
                                  UserInfoId = u.UserInfoId
@@ -72,6 +74,7 @@ namespace DataAccess.Concrete.EntityFramework
                  var user = context.Users.Where(u => u.UserId == userId)
                                  .Select(u => new UserAllInfoDto
                                  {
+                                     Username= u.Username,
                                      ProfilePhoto = u.ProfilePhoto,
                                      Skills = context.Skills.Where(s => s.UserId == u.UserId).ToList(),
                                      Certificates = context.Certificates.Where(c => c.UserId == u.UserId).ToList(),
@@ -80,6 +83,7 @@ namespace DataAccess.Concrete.EntityFramework
                                                         .Select(p => new ProjectDto
                                                         {
                                                             ProjectId = p.ProjectId,
+                                                            ProjectUrl=p.ProjectUrl,
                                                             Title = p.Title,
                                                             CreatedAt=p.CreatedAt,
                                                             Description = p.Description,
@@ -131,10 +135,9 @@ namespace DataAccess.Concrete.EntityFramework
                              select new UserById
                              {
                                  UserId = u.UserId,
-                 
+                                 Username=u.Username,
                                  CreatedAt = u.CreatedAt,
                                  Email = u.Email,
-             
                                  ProfilePhoto = u.ProfilePhoto,
                                  Status = u.Status,
                                  UserInfoId=u.UserInfoId,
@@ -142,6 +145,24 @@ namespace DataAccess.Concrete.EntityFramework
                              };
                 return result.FirstOrDefault();
             }
+        }
+        public bool UpdateUser(int id, string newProfilePhotoUrl)
+        {
+
+            using (PortfContext context = new PortfContext())
+            {
+                var user = context.Users.FirstOrDefault(u => u.UserId == id);
+                if (user == null)
+                {
+                    return false;
+                }
+
+                user.ProfilePhoto = newProfilePhotoUrl;
+                context.SaveChanges();
+                return true;
+            }
+      
+
         }
         public int GetUserInfoIdByUserId(int id)
         {

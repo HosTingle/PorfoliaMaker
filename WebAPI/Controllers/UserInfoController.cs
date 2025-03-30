@@ -98,29 +98,23 @@ namespace WebAPI.Controllers
 
         }
         [HttpPost("UpdateUserInfoApplicant")]
-        public IActionResult UpadateUserInfoApplicant(UserInfoApplicantDto userInfoApplicantDto)
+        public IActionResult UpdateUserInfoApplicant(UserInfoApplicantDto userInfoApplicantDto)
         {
             int userId = GetUserIdFromToken();
-            var id = _userInfoService.GetUserIdByDetails(userInfoApplicantDto.UserInfoId);
-            if (id.Data == userId)
-            {
-                userInfoApplicantDto.UserId = userId;
+            var result = _userInfoService.UpdateUserInfoApplicant(userId, userInfoApplicantDto);
 
-                var result = _userInfoService.UpdateUserInfoApplication(userInfoApplicantDto);
-                if (result.Success)
-                {
-                    return Ok(result);
-                }
-                return BadRequest(result);
+            if (result.Success)
+            {
+                return Ok(result);
             }
-            return BadRequest(new ErrorResult(Messages.UnAuthorizedAccess));
+
+            return BadRequest(result);
         }
         [HttpPost("UpdateUserInfoPersonal")]
         public IActionResult UpdateUserInfoPersonal(UserInfoPersonalDto userInfoPersonalDto)
         {
             int userId = GetUserIdFromToken();
-            userInfoPersonalDto.UserId = userId;
-            var result = _userInfoService.UpdateUserInfoPersonal(userInfoPersonalDto);
+            var result = _userInfoService.UpdateUserInfoPersonal(userId,userInfoPersonalDto);
             if (result.Success)
             {
                 return Ok(result);
@@ -132,8 +126,7 @@ namespace WebAPI.Controllers
         public IActionResult UpdateUserInfoAbout(UserInfoAboutDto userInfoAboutDto)
         {
             int userId = GetUserIdFromToken();
-            userInfoAboutDto.UserId = userId;
-            var result = _userInfoService.UpdateUserInfoAbout(userInfoAboutDto);
+            var result = _userInfoService.UpdateUserInfoAbout(userId,userInfoAboutDto);
             if (result.Success)
             {
                 return Ok(result);

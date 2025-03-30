@@ -1,4 +1,5 @@
 ﻿using Business.Abstract;
+using Core.Utilities.Results;
 using Entities.DTOs;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -56,5 +57,17 @@ namespace WebAPI.Controllers
 
             return BadRequest(result);
         }
+
+        [HttpGet("isAuthenticated")]
+        public ActionResult IsAuthenticated()
+        {
+            var token = Request.Cookies["AuthToken"];
+            if (string.IsNullOrEmpty(token))
+            {
+                return Unauthorized(new ErrorResult("Yetkisiz erişim!"));
+            }
+            return Ok(new SuccessResult("Giriş Başarılı"));
+        }
+
     }
 }

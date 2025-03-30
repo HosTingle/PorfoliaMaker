@@ -58,38 +58,6 @@ namespace Business.Concrete
             _userInfoDal.Update(userInfo);
             return new SuccessResult();
         }
-
-        public IResult UpdateUserInfoApplication(UserInfoApplicantDto userInfoApplicantDto)
-        {
-            userInfoApplicantDto.UserInfoId=_userDal.GetUserInfoIdByUserId(userInfoApplicantDto.UserId);
-            var result=_userInfoDal.UpdateUserInfoApplication(userInfoApplicantDto);
-            if (result)
-            {
-                return new SuccessResult(Messages.UserInfoApplicantSuccess);
-            }
-            return new ErrorResult(Messages.UserInfoApplicantError);
-        } 
-
-        public IResult UpdateUserInfoPersonal(UserInfoPersonalDto userInfoPersonalDto)
-        {
-            userInfoPersonalDto.UserInfoId = _userDal.GetUserInfoIdByUserId(userInfoPersonalDto.UserId);
-            _userInfoDal.UpdateUserInfoPersonal(userInfoPersonalDto);
-            return new SuccessResult(Messages.UserInfoPersonalSucces);
-        }
-
-        public IDataResult<UserInfoAboutDto> UpdateUserInfoAbout(UserInfoAboutDto userInfoAboutDto)
-        {
-            userInfoAboutDto.UserInfoId = _userDal.GetUserInfoIdByUserId(userInfoAboutDto.UserId);
-            var result=_skillDal.UpdateSkills(userInfoAboutDto);
-            if (result)
-            {
-                _userInfoDal.UpdateUserInfoAbout(userInfoAboutDto);
-                userInfoAboutDto.Skills= _skillDal.GetAll(s=>s.UserId==userInfoAboutDto.UserId);
-                return new SuccessDataResult<UserInfoAboutDto>( userInfoAboutDto,Messages.UserInfoAboutSucces);
-            }
-            return new ErrorDataResult<UserInfoAboutDto>(Messages.UserInfoAboutError);  
-        }
-
         public IDataResult<List<UserSearchResultDto>> SearchByNickname(string nickname)
         {
             return new SuccessDataResult<List<UserSearchResultDto>>(_userInfoDal.SearchByNickname(nickname), Messages.UserInfoAboutSucces);
@@ -98,6 +66,69 @@ namespace Business.Concrete
         public IDataResult<int?> GetUserIdByDetails(int userInfoId)
         {
             return new SuccessDataResult<int?>(_userInfoDal.GetUserIdByDetails(userInfoId));
+        }
+        public IResult UpdateUserInfoPersonal(int userId, UserInfoPersonalDto userInfoPersonalDto)
+        {
+            var id = _userInfoDal.GetUserIdByDetails(userInfoPersonalDto.UserInfoId);
+            if (id != userId)
+            {
+                return new ErrorResult(Messages.UnAuthorizedAccess);
+            }
+            userInfoPersonalDto.UserId= userId;
+            _userInfoDal.UpdateUserInfoPersonal(userInfoPersonalDto);
+            return new SuccessResult(Messages.UserInfoPersonalSucces);
+        }
+        public IDataResult<UserInfoAboutDto> UpdateUserInfoAbout(int userId, UserInfoAboutDto userInfoAboutDto)
+        {
+    
+            if (_userInfoDal.GetUserIdByDetails(userInfoAboutDto.UserInfoId) != userId)
+            {
+                return new ErrorDataResult<UserInfoAboutDto>(Messages.UnAuthorizedAccess);
+            }
+
+            userInfoAboutDto.UserId = userId;
+
+       
+            if (!_skillDal.UpdateSkills(userInfoAboutDto))
+            {
+                return new ErrorDataResult<UserInfoAboutDto>(Messages.UserInfoAboutError);
+            }
+
+
+            if (!_userInfoDal.UpdateUserInfoAbout(userInfoAboutDto))
+            {
+                return new ErrorDataResult<UserInfoAboutDto>(Messages.UserInfoAboutError);
+            }
+
+     
+            userInfoAboutDto.Skills = _skillDal.GetAll(s => s.UserId == userInfoAboutDto.UserId);
+
+  
+            if (!_userDal.UpdateUser(userId, userInfoAboutDto.PhotoUrl!))
+            {
+                return new ErrorDataResult<UserInfoAboutDto>(Messages.UserInfoAboutError);
+            }
+
+            return new SuccessDataResult<UserInfoAboutDto>(userInfoAboutDto, Messages.UserInfoAboutSucces);
+        }
+
+        public IResult UpdateUserInfoApplicant(int userId, UserInfoApplicantDto userInfoApplicantDto)
+        {
+            var id = _userInfoDal.GetUserIdByDetails(userInfoApplicantDto.UserInfoId);
+            if (id != userId)
+            {
+                return new ErrorResult(Messages.UnAuthorizedAccess);
+            }
+
+            userInfoApplicantDto.UserId = userId;
+
+            var updateResult = _userInfoDal.UpdateUserInfoApplication(userInfoApplicantDto);
+            if (updateResult)
+            {
+                return new SuccessResult(Messages.UserInfoApplicantSuccess);
+            }
+
+            return new ErrorResult(Messages.UserInfoApplicantError);
         }
     }
 }

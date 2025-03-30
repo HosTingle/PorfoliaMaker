@@ -10,10 +10,7 @@ namespace Entities.DTOs
 {
     public class UserAllInfoDto:IDto 
     {
-        public string Name { get; set; }
-
-        public string NickName { get; set; } 
-        
+        public string Username { get; set; } 
         public string LinkedIn {  get; set; } 
 
         public string Github {  get; set; }
