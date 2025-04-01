@@ -27,7 +27,17 @@ builder.Services.AddHttpContextAccessor();
 builder.Services.AddDependencyResolvers(new ICoreModule[]{
     new CoreModule(),
 });
-builder.Services.AddCors();
+builder.Services.AddCors(options =>
+{
+    options.AddPolicy("AllowFrontend",
+        policy =>
+        {
+            policy.WithOrigins("http://localhost:4200") 
+                  .AllowAnyHeader()
+                  .AllowAnyMethod()
+                  .AllowCredentials(); 
+        });
+});
 //builder.Services.AddSingleton<IUserDal, EfUserDal>();
 //builder.Services.AddSingleton<IProductDal, EfProductDal>();
 //builder.Services.AddSingleton<IProjectsDal, EfProjectsDal>();
@@ -59,7 +69,6 @@ builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
 
 var app = builder.Build();
 
-// Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
 {
     app.UseSwagger();
@@ -69,8 +78,7 @@ if (app.Environment.IsDevelopment())
 
 app.ConfigureCustomExceptionMiddleware();
 
-app.UseCors(builder => builder.WithOrigins("http://localhost:4200").AllowAnyOrigin().AllowAnyMethod().AllowAnyHeader());
-
+app.UseCors("AllowFrontend");
 app.UseHttpsRedirection();
 
 app.UseAuthentication();

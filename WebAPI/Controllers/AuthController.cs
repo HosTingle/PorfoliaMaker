@@ -29,6 +29,14 @@ namespace WebAPI.Controllers
             var result = _authService.CreateAccessToken(userToLogin);
             if (result.Success)
             {
+                var cookieOptions = new CookieOptions
+                {
+                    HttpOnly = true,  
+                    Secure = true,    
+                    SameSite = SameSiteMode.None, 
+                    Expires = result.Data.Expiration 
+                };
+                Response.Cookies.Append("AuthToken", result.Data.Token, cookieOptions);
                 return Ok(result);
             }
 
