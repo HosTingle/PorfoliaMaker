@@ -63,6 +63,8 @@ namespace Business.Constants
         public static string UpdateSocialLinks = "Linkler güncellendi";
 
         public static string UnAuthorizedAccess = "Yetkisiz İstek";
+
+        public static string LoginSucces = "Giriş Başarılı";
     }
 }
 

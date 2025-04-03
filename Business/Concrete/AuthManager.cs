@@ -116,6 +116,7 @@ namespace Business.Concrete
         {
             var claims = _userService.GetClaims(user.Data);
             var accessToken = _tokenHelper.CreateToken(user.Data, claims);
+          
             return new SuccessDataResult<AccessToken>(accessToken, user.Message);
         }
         public IResult AddUserRole(IDataResult<User> user) 

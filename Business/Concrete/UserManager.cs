@@ -103,7 +103,17 @@ namespace Business.Concrete
         {
             return _usersDal.GetClaims(user);
         }
-  
+        public IDataResult<string> GetUsernameById(int id) 
+        {
+            var result = _usersDal.GetUsernameById(id);
+            if (result != null)
+            {
+                return new SuccessDataResult<string>(result, Messages.UserInfoPersonalSucces);
+            }
+            return new ErrorDataResult<string>(result, Messages.UserInfoPersonalSucces);
+
+        }
+
         public User GetByMail(string email)
         {
             var result= _usersDal.Get(u => u.Email == email);
@@ -120,10 +130,9 @@ namespace Business.Concrete
             return new SuccessDataResult<List<User>>(_usersDal.GetAll(x=>x.UserId == getbyproject));
        
         }
-        [SecuredOperation("user")]
         public IDataResult<UserAllInfoDto>? GetUserAllInfo(int id) 
         {
-            return new SuccessDataResult<UserAllInfoDto>(_usersDal.GetUsersAllInfo(id));
+            return new SuccessDataResult<UserAllInfoDto>(_usersDal.GetUsersAllInfo(id), Messages.LoginSucces);
         }
         public IDataResult<UserAllInfoDto>? GetUserAllInfoByUserName(string name) 
         {

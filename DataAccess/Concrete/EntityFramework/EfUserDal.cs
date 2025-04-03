@@ -146,6 +146,16 @@ namespace DataAccess.Concrete.EntityFramework
                 return result.FirstOrDefault();
             }
         }
+        public string GetUsernameById(int id)
+        {
+            using (PortfContext context = new PortfContext())
+            {
+                return context.Users
+                              .Where(u => u.UserId == id)
+                              .Select(u => u.Username)
+                              .FirstOrDefault();
+            }
+        }
         public bool UpdateUser(int id, string newProfilePhotoUrl)
         {
 

@@ -11,6 +11,8 @@ using System.Threading.Tasks;
 using Castle.DynamicProxy;
 using Core.Extensions;
 using Microsoft.Extensions.DependencyInjection;
+using System.IdentityModel.Tokens.Jwt;
+using System.Security.Claims;
 namespace Business.BusinessAspects.Autofac
 {
     public class SecuredOperation : MethodInterception
@@ -29,7 +31,17 @@ namespace Business.BusinessAspects.Autofac
 
         protected override void OnBefore(IInvocation invocation)
         {
-            var roleClaims = _httpContextAccessor.HttpContext.User.ClaimRoles();
+            var token = _httpContextAccessor.HttpContext.Request.Cookies["AuthToken"];
+            if (string.IsNullOrEmpty(token))
+            {
+                throw new AuthorizationException(Messages.AuthorizationDenied);
+            }
+
+            var tokenHandler = new JwtSecurityTokenHandler();
+            var jwtToken = tokenHandler.ReadJwtToken(token);
+
+            var roleClaims = jwtToken.Claims.Where(c => c.Type == ClaimTypes.Role).Select(c => c.Value).ToList();
+
             foreach (var role in _roles)
             {
                 if (roleClaims.Contains(role))

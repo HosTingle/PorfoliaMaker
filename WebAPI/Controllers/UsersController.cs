@@ -1,9 +1,12 @@
 ﻿using Business.Abstract;
 using Business.Concrete;
 using Core.Entities.Concrete;
+using Core.Utilities.Results;
 using DataAccess.Concrete.EntityFramework;
 using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Http.HttpResults;
 using Microsoft.AspNetCore.Mvc;
+using Newtonsoft.Json.Linq;
 
 namespace WebAPI.Controllers
 {
@@ -92,6 +95,18 @@ namespace WebAPI.Controllers
 
             return BadRequest(result);
         }
+        [HttpGet("getByIdName")]
+        public IActionResult GetByIdName()
+        {
+            int userId = GetUserIdFromToken();
+            var result = _usersService.GetUsernameById(userId);
+            if (result.Success)
+            {
+                return Ok(result);
+            }
+
+            return BadRequest(result);
+        }
         [HttpGet("getbyproject")] 
         public IActionResult GetByProject(int getbyproject) 
         {
@@ -105,6 +120,21 @@ namespace WebAPI.Controllers
         
         }
 
+        [HttpGet("isOwnProfile/{username}")]
+        public IActionResult isOwnProfile(string username)
+        {
+            var resultuser = GetUserUsername();
+            if (resultuser != username)
+            {
+                var resulter = new ErrorResult("Yetkisiz Erişim");
+                return Ok(resulter);
+            }
+
+            var result = new SuccessResult("Erişme başarılı");
+
+            return Ok(result);
+
+        }
 
     }
 }

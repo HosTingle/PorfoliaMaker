@@ -25,5 +25,7 @@ namespace DataAccess.Abstract
 
         bool UpdateUser(int id, string newProfilePhotoUrl);
 
+        string GetUsernameById(int id);
+
     }
 }

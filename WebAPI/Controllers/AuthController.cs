@@ -8,13 +8,14 @@ namespace WebAPI.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class AuthController : Controller
+    public class AuthController :BaseController
     {
         private IAuthService _authService;
-
-        public AuthController(IAuthService authService)
+        private IUserService _userService;
+        public AuthController(IAuthService authService,IUserService userService)
         {
             _authService = authService;
+            _userService = userService;
         }
 
         [HttpPost("login")]
@@ -37,7 +38,8 @@ namespace WebAPI.Controllers
                     Expires = result.Data.Expiration 
                 };
                 Response.Cookies.Append("AuthToken", result.Data.Token, cookieOptions);
-                return Ok(result);
+                var result2= _userService.GetUserAllInfo(userToLogin.Data.UserId);
+                return Ok(result2);
             }
 
             return BadRequest(result.Message);
@@ -67,15 +69,36 @@ namespace WebAPI.Controllers
         }
 
         [HttpGet("isAuthenticated")]
-        public ActionResult IsAuthenticated()
+        public IActionResult IsAuthenticated()
         {
             var token = Request.Cookies["AuthToken"];
+     
             if (string.IsNullOrEmpty(token))
             {
-                return Unauthorized(new ErrorResult("Yetkisiz erişim!"));
+                var resulter = new ErrorResult("Yetkisiz erişim!");
+                return Unauthorized(resulter);
             }
-            return Ok(new SuccessResult("Giriş Başarılı"));
+         
+            var result = new SuccessResult("Giriş başarılı.");
+            return Ok(result);
         }
+        [HttpPost("logout")]
+        public IActionResult Logout()
+        {
+            var cookieOptions = new CookieOptions
+            {
+                Expires = DateTime.UtcNow.AddDays(-1), 
+                HttpOnly = true,
+                Secure = true, 
+                SameSite = SameSiteMode.Lax,
+                Path = "/" 
+            };
+
+            Response.Cookies.Append("AuthToken", "", cookieOptions);
+            var result = new SuccessResult("Çıkış İşemi Gerçekleşti");
+            return Ok(result);
+        }
+
 
     }
 }

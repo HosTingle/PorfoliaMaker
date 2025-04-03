@@ -31,5 +31,7 @@ namespace Business.Abstract
         IDataResult<UserAllInfoDto>? GetUserAllInfo(int id);
 
         IDataResult<UserAllInfoDto>? GetUserAllInfoByUserName(string name);
+
+        IDataResult<string> GetUsernameById(int id);
     } 
 }

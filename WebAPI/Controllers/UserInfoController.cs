@@ -101,7 +101,7 @@ namespace WebAPI.Controllers
         [HttpPost("UpdateUserInfoApplicant")]
         public IActionResult UpdateUserInfoApplicant(UserInfoApplicantDto userInfoApplicantDto)
         {
-            var token = Request.Cookies["AuthToken"];
+         var token = Request.Cookies["AuthToken"];
             int userId = GetUserIdFromToken();
             var result = _userInfoService.UpdateUserInfoApplicant(userId, userInfoApplicantDto);
 
